@@ -1,34 +1,45 @@
 @import 'setting';
 
 .nav{
-    position: relative;
-    top: -10%;
+    position: absolute;
+    top: 0%;
     flex: 1;
     box-sizing: border-box;
-    transition: all 0.5s ease-out;
-    z-index: 5;
+    transition: all 0.25s ease-out;
+    z-index: 0;
     padding-left: 1rem;
     padding-right: 1rem;
 
     .nav-brand{
-        display: none;
+        display: flex;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        img{
+            vertical-align: middle;
+            height: 50px;
+        }
     }
     .nav-lists{
         display: flex;
         align-items: center;
-        margin: auto;
+        margin: 0 0 0 auto;
 
         .list-item{
             position: relative;
             height: 100%;
             display: flex;
             align-items: center;
-            padding-left: 1rem;
-            padding-right: 1rem;
             transition: all 0.25s ease-out;
             
             & a{
                 font-family: $noto-sans;
+                font-size:1rem;
+                display: flex;
+                height: 100%;
+                width: 100%;
+                line-height: 60px;
+                padding-left: 1rem;
+                padding-right: 1rem;
             }
 
             &:hover{
@@ -44,22 +55,9 @@
     &.fixed,&.sticky{
         position: fixed;
         top: 0;
-        transition: all 0.5s ease-out;
-
-        .nav-brand{
-            display: flex;
-            img{
-                vertical-align: middle;
-                height: 60px;
-            }
-        }
-
-        .nav-lists{
-            margin: 0 0 0 auto;
-            a{
-                font-size:1rem;
-            }
-        }
+        animation-name: fixNav;
+        animation-duration: 0.4s;
+        animation-timing-function: ease-out;
         
     }
 
@@ -70,5 +68,14 @@
                 color: #000000;
             }
         }
+    }
+}
+
+@keyframes fixNav{
+    from{
+        top: -10%;
+    }
+    to{
+        top: 0;
     }
 }

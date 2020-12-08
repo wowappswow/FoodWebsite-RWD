@@ -21,7 +21,7 @@ function bannerAnimateClassAdd(item) {
     setTimeout(() => {
         item.classList.add('show');
         console.log(item.dataset.item);
-    }, item.dataset.item*500);
+    }, item.dataset.item*300);
 }
 
 function btnTransitionRecover(item){
