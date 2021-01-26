@@ -1,0 +1,69 @@
+{
+    "products" : [
+        {
+            "id" : 1, 
+            "imgSrc" : "../src/pic/product_imgs/product_id_1.jpeg",
+            "type" : "main course",
+            "productName" : "日式咖哩飯",
+            "productPrice" :  75,
+            "recommend":false
+        },
+        {
+            "id" : 2,
+            "imgSrc" : "../src/pic/product_imgs/product_id_2.jpeg",
+            "type" : "side dish",
+            "productName" : "鹹酥炸雞",
+            "productPrice" :  50,
+            "recommend":false
+        },
+        {
+            "id" : 3,
+            "imgSrc" : "../src/pic/product_imgs/product_id_3.jpeg",
+            "type" : "side dish",
+            "productName" : "黃金炸豬排",
+            "productPrice" :  80,
+            "recommend":true
+        },
+        {
+            "id" : 4,
+            "imgSrc" : "../src/pic/product_imgs/product_id_4.jpeg",
+            "type" : "soup",
+            "productName" : "冬陰湯",
+            "productPrice" :  40,
+            "recommend":true
+        },
+        {
+            "id" : 5,
+            "imgSrc" : "../src/pic/product_imgs/product_id_5.jpeg",
+            "type" : "main course",
+            "productName" : "經典義大利麵",
+            "productPrice" :  65,
+            "recommend":true
+        },
+        {
+            "id" : 6,
+            "imgSrc" : "../src/pic/product_imgs/product_id_6.jpeg",
+            "type" : "main course",
+            "productName" : "味噌烏冬面",
+            "productPrice" :  65,
+            "recommend":true
+        },
+        {
+            "id" : 7,
+            "imgSrc" : "../src/pic/product_imgs/product_id_7.jpeg",
+            "type" : "soup",
+            "productName" : "四季時蔬湯",
+            "productPrice" :  80,
+            "recommend":false
+        },
+        {
+            "id" : 8,
+            "imgSrc" : "../src/pic/product_imgs/product_id_8.jpeg",
+            "type" : "soup",
+            "productName" : "奶油燉菜濃湯",
+            "productPrice" :  50,
+            "recommend":true
+        }
+    ]
+    
+}

@@ -10,7 +10,7 @@
     <title>閒飯家常</title>
     <link
         rel="shortcut icon"
-        href="src/ico/food-ico.png"
+        href="../src/ico/food-ico.png"
         type="image/vnd.microsoft.icon"
     />
     <link
@@ -19,7 +19,7 @@
     >
 </head>
 
-<body>
+<body onload="pageLoad()">
     <nav
         id="navID"
         class="nav container bg-transparent"
@@ -38,81 +38,14 @@
                 <h4 class="font-h4 d-block">商品</h4>
                 <p class="font-2x d-block pl-4">PRODUCT LIST</p>
             </div>
-            <div class="product-content">
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=1
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 100.00</span>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=2
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 80.00</span>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=3
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 45.00</span>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=4
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 80.00</span>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=5
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 60.00</span>
-                    </div>
-                </div>
-                <div class="product-box">
-                    <img
-                        src=https://picsum.photos/300/300?random=6
-                        class="border-round"
-                    >
-                    <div>
-                        <p>Description</p>
-                        <h4>Title</h4>
-                        <span>NT 30.00</span>
-                    </div>
-                </div>
-            </div>
+            <div class="product-content"></div>
         </div>
         <aside class="menu-nav">
             <ul class="nav-box">
-                <li class="current-select disable">所有商品</li>
-                <li>主廚推薦</li>
-                <li>主菜</li>
-                <li>配菜 / 飲品</li>
+                <li class="current-select disable"><span></span>所有商品</li>
+                <li><span></span>推薦</li>
+                <li><span></span>主菜</li>
+                <li><span></span>配菜 / 湯品</li>
             </ul>
         </aside>
     </section>
@@ -168,6 +101,18 @@
             </p>
         </div>
     </footer>
+
+    <div class="return-top-btn d-flex align-items-center justify-content-center">
+        <button
+            id="top-btn"
+            class="d-flex flex-column align-items-center justify-content-center"
+        >
+            <span>TOP</span>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+
+
 
     <template id="navTemplate">
         <a

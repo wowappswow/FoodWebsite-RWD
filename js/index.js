@@ -4,7 +4,7 @@ const enterPageBody = document.getElementById('enter-page');
 enterPageBody.onload = pageLoading;
 
 function  pageLoading(){
-    console.log('Page load success.');
+    // console.log('Page load success.');
     bannerAnimation();
 }
 
@@ -20,7 +20,7 @@ function bannerAnimation(){
 function bannerAnimateClassAdd(item) {
     setTimeout(() => {
         item.classList.add('show');
-        console.log(item.dataset.item);
+        // console.log(item.dataset.item);
     }, item.dataset.item*300);
 }
 

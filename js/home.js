@@ -25,7 +25,7 @@ let prevBtn = document.querySelector('.carousel-view-btn.prev');
 let nextBtn = document.querySelector('.carousel-view-btn.next');
 const carouselView = document.querySelector('.carousel-view');
 const carousel = carouselView.querySelector('.carousel-container');
-const carouselImgs = [...carousel.querySelectorAll('a')];
+const carouselImgs = [...carousel.querySelectorAll('.display-box')];
 const carouselLen = carouselImgs.length;
 const carouselMiddle = carouselLen/2;
 let index, xValue, timer = null, autoDuration = 3500;
@@ -48,28 +48,42 @@ function carouselAutoActive(){
         nextHandler();
     }, autoDuration);
 }
+function carouselErrorDetec(){
+    let matrix  = getComputedStyle(carousel, null).transform;
+    let x, y;
+    const matrixType = matrix.includes('3d') ? '3d' : '2d';
+    if(matrixType === '2d'){
+        const matrixValues = matrix.match(/matrix.*\((.+)\)/)[1].split(', ');
+        if (matrixType === '2d') {
+            // console.log(matrixValues);
+            x = matrixValues[4];
+            y = matrixValues[5];
+        }
+    }
+    if(x < -3000){
+        console.log('CSS style transform error, the transform will be reset.');
+        anchorReset(-1000, -4);
+    } 
+}
 function prevHandler(){
     index++;
     xValue = index*(250);
-    // let pointer = -index;
-    // console.log(pointer);
     carousel.style.transform = `translateX(${xValue}px)`;
 }
 function nextHandler(){
     index--;
     xValue = index*(250);
-    // let pointer = -index;
-    // console.log(pointer);
     carousel.style.transform = `translateX(${xValue}px)`;
 }
 function carouselAutoControl() {
     if (document.visibilityState === 'visible') {
-        if( visibleFlag === true );
-        else{
+        if( visibleFlag === false ){
+            carouselErrorDetec();
             carouselAutoActive();
             visibleFlag = true;
         } 
-    } else {
+    } 
+    else {
         carouselAutoStop();
         visibleFlag = false;
     }
