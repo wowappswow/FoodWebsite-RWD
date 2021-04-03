@@ -23,122 +23,7 @@
     <nav
         id="navID"
         class="nav container bg-transparent"
-    ></nav>
-
-    <div class="banner banner-h4 pt-3x">
-        <img
-            src="https://images.unsplash.com/photo-1522336572468-97b06e8ef143?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1510&q=80"
-            alt=""
-        >
-    </div>
-
-    <main class="service d-flex pt-3x pb-3x">
-        <div class="service-items col-50 pl-10x ">
-            <h4 class="font-5x">服務項目</h4>
-            <div class="service-items-frozen pt-4x d-flex font-3x">
-                <div class="service-items-img">
-                    <img
-                        src="../src/pic/service_items_frozen.png"
-                        alt=""
-                    >
-                </div>
-                <p class="service-items-descrition d-flex align-items-center pl-4">
-                    本店提供部分商品的冷凍食材包
-                </p>
-            </div>
-            <div class="service-items-takeout pt-4x d-flex font-3x">
-                <div class="service-items-img">
-                    <img
-                        src="../src/pic/service_items_takeout.png"
-                        alt=""
-                    >
-                </div>
-                <p class="service-items-descrition d-flex align-items-center pl-4">
-                    本店與外送平台合作提供外送服務
-                </p>
-            </div>
-            <div class="service-items-booking pt-4x d-flex font-3x">
-                <div class="service-items-img">
-                    <img
-                        src="../src/pic/service_items_booking.png"
-                        alt=""
-                    >
-                </div>
-                <p class="service-items-descrition d-flex align-items-center pl-4">
-                    本店提供預約點餐服務但必須先付清清理費
-                </p>
-            </div>
-        </div>
-        <div class="service-partner col-50 pl-10x">
-            <h4 class="font-5x">合作夥伴</h4>
-            <div class="service-partner-logo">
-                <img
-                    src="../src/pic/logo_foodpanda.png"
-                    alt=""
-                >
-            </div>
-            <div class="service-partner-logo">
-                <img
-                    src="../src/pic/logo_ubereats.png"
-                    alt=""
-                >
-            </div>
-        </div>
-    </main>
-
-    <footer class="footer bg-tt">
-        <div class="footer-content pt-6 pb-6">
-            <div class="logo-container col-33 flex-column align-items-center">
-                <img
-                    src="/src/logo/logo-footer.png"
-                    alt=""
-                />
-                <p>讓每一口的美味都能夠勾起心中的思念</p>
-            </div>
-            <div class="contact col-33">
-                <ul>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>236新北市土城區明德路一段291巷</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone-alt"></i>
-                        <p>(02)2913-4776</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="social col-33">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-facebook-square"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-line"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-twitter-square"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-content copyright bg-light">
-            <p>
-                Copyright © 2020 閒飯家常沒有股份有限公司 All Rights Reserved
-            </p>
-        </div>
-    </footer>
-
-    <template id="navTemplate">
+    >
         <a
             href="../index.html"
             class="nav-brand"
@@ -148,7 +33,12 @@
                 alt=""
             />
         </a>
-        <ul class="nav-lists">
+        <div class="nav-menu hide-for-desktops">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-lists hide-for-mobile">
             <li class="list-item">
                 <a
                     href="../pages/home.html"
@@ -169,13 +59,113 @@
             </li>
             <li class="list-item">
                 <a
-                    href="../pages/about.html"
+                    href="../pages/member.html"
                     class="text-unstyle text-primary font-5x font-w6"
-                >關於我們</a>
+                >會員</a>
             </li>
         </ul>
-    </template>
-    <script src="../js/product.js"></script>
+    </nav>
+
+    <div class="service-banner">
+        <img
+            src="https://images.unsplash.com/photo-1444952483853-7c36e902e722?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1267&q=80"
+            alt=""
+            class="obj-position-c2"
+        >
+    </div>
+
+    <main class="service">
+        <div class="service-title">
+            <h4>服務</h4>
+            <span>SERVICE</span>
+        </div>
+        <ul class="service-items">
+            <li>
+                <img
+                    src="https://images.unsplash.com/photo-1585047668151-b281b0c89c97?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=667&q=80"
+                    alt=""
+                >
+                <span>外送</span>
+            </li>
+            <li>
+                <img
+                    src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80"
+                    alt=""
+                >
+                <span>內用</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_2.jpeg"
+                    alt=""
+                >
+                <span>冷凍食品</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_4.jpeg"
+                    alt=""
+                >
+                <span>料理包</span>
+            </li>
+        </ul>
+    </main>
+
+    <footer class="footer flex-column">
+        <div class="footer-content">
+            <div class="logo">
+                <img
+                    src="/src/logo/logo-footer.png"
+                    alt=""
+                />
+                <p>讓每一口的美味都能夠勾起心中的思念</p>
+            </div>
+            <ul class="contact">
+                <h4 class="content-title">聯絡資訊</h4>
+                <li>
+                    <i class="fas fa-location-arrow"></i>
+                    <p>236新北市土城區明德路一段291巷</p>
+                </li>
+                <li>
+                    <i
+                        class="fa fa-phone-alt"
+                        aria-hidden="true"
+                    ></i>
+                    <p>(02)2913-4776</p>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
+                </li>
+            </ul>
+            <ul class="social">
+                <h4 class="content-title">社群連結</h4>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-facebook-square"></i>
+                        FaceBook 粉專
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-line"></i>
+                        LINE 官方帳號
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-twitter-square"></i>
+                        Twitter 官方帳號
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="copyright">
+            Copyright © 2020 閒飯家常All Rights Reserved
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
 </body>
 
 </html>

@@ -19,171 +19,11 @@
     >
 </head>
 
-<body>
+<body onload="homePageLoad()">
     <nav
         id="navID"
         class="nav container bg-transparent"
-    ></nav>
-
-    <section class="banner h-100v">
-        <img
-            src="../src/pic/banner_dish04.png"
-            alt=""
-        />
-    </section>
-
-    <section class="product-display">
-        <div class="image-show">
-            <p class="font-6x text-center text-white">熟悉的家鄉，最對味</p>
-            <p class="font-3x text-center text-white">
-                閒飯家常，每一口都勾起心中的思念
-            </p>
-        </div>
-        <div class="product-carousel">
-            <div class="carousel-view d-flex">
-                <button
-                    class="carousel-view-btn prev"
-                    id="prev"
-                >
-                    <i></i>
-                </button>
-                <button
-                    class="carousel-view-btn next"
-                    id="next"
-                >
-                    <i></i>
-                </button>
-                <div class="carousel-container d-flex flex-unwrap">
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_1.jpeg"
-                                alt="product_id_1"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_2.jpeg"
-                                alt="product_id_2"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_3.jpeg"
-                                alt="product_id_3"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_4.jpeg"
-                                alt="product_id_4"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_5.jpeg"
-                                alt="product_id_5"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_6.jpeg"
-                                alt="product_id_6"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_7.jpeg"
-                                alt="product_id_7"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                    <div class="display-box">
-                        <a href="javascript:void(0)">
-                            <img
-                                src="../src/pic/product_imgs/product_id_8.jpeg"
-                                alt="product_id_8"
-                                class="obj-position-rc"
-                            >
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer bg-tt">
-        <div class="footer-content pt-6 pb-6">
-            <div class="logo-container col-33 flex-column align-items-center">
-                <img
-                    src="/src/logo/logo-footer.png"
-                    alt=""
-                />
-                <p>讓每一口的美味都能夠勾起心中的思念</p>
-            </div>
-            <div class="contact col-33">
-                <ul>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>236新北市土城區明德路一段291巷</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone"></i>
-                        <p>(02)2913-4776</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="social col-33">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-facebook-square"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-line"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-twitter-square"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-content copyright bg-light">
-            <p>
-                Copyright © 2020 閒飯家常沒有股份有限公司 All Rights Reserved
-            </p>
-        </div>
-    </footer>
-
-    <template id="navTemplate">
+    >
         <a
             href="../index.html"
             class="nav-brand"
@@ -193,7 +33,12 @@
                 alt=""
             />
         </a>
-        <ul class="nav-lists">
+        <div class="nav-menu hide-for-desktops">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-lists hide-for-mobile">
             <li class="list-item">
                 <a
                     href="../pages/home.html"
@@ -214,13 +59,228 @@
             </li>
             <li class="list-item">
                 <a
-                    href="../pages/about.html"
+                    href="../pages/member.html"
                     class="text-unstyle text-primary font-5x font-w6"
-                >關於我們</a>
+                >會員</a>
             </li>
         </ul>
-    </template>
+    </nav>
 
+    <section class="home-banner">
+        <img
+            src="../src/pic/banner_dish04.png"
+            alt=""
+        />
+    </section>
+
+    <section class="product-intro">
+        <div class="product-intro-title">商品介紹</div>
+        <ul class="product-intro-lists">
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_1.jpeg"
+                    alt=""
+                >
+                <span>日式咖哩飯 - 日本國民美食</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_2.jpeg"
+                    alt=""
+                >
+                <span>鹹酥炸雞 - 香脆濃郁伴隨著檸檬香</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_3.jpeg"
+                    alt=""
+                >
+                <span>黃金炸豬排 - 每一口都讓人流連忘返</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_4.jpeg"
+                    alt=""
+                >
+                <span>冬陰湯 - 讓在這個寒天裡溫暖你的心</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_5.jpeg"
+                    alt=""
+                >
+                <span>義大利麵 - 充滿異國風情的味道</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_6.jpeg"
+                    alt=""
+                >
+                <span>味噌烏龍麵 - 來自大海的饋贈</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_7.jpeg"
+                    alt=""
+                >
+                <span>四季時蔬湯 - 營養好吸收</span>
+            </li>
+            <li>
+                <img
+                    src="../src/pic/product_imgs/product_id_8.jpeg"
+                    alt=""
+                >
+                <span>奶油燉菜濃湯 - 還在煩惱小孩子的挑食嗎</span>
+            </li>
+        </ul>
+    </section>
+
+
+    <section class="home-banner-2">
+        <p class="font-6x text-center text-white">熟悉的家鄉，最對味</p>
+        <p class="font-3x text-center text-white">
+            閒飯家常，每一口都勾起心中的思念
+        </p>
+    </section>
+
+    <section class="product-carousel">
+        <div class="carousel-view flex">
+            <button
+                class="carousel-view-btn prev"
+                id="prev"
+            >
+                <i></i>
+            </button>
+            <button
+                class="carousel-view-btn next"
+                id="next"
+            >
+                <i></i>
+            </button>
+            <div class="carousel-container flex flex-unwrap">
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_1.jpeg"
+                            alt="product_id_1"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_2.jpeg"
+                            alt="product_id_2"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_3.jpeg"
+                            alt="product_id_3"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_4.jpeg"
+                            alt="product_id_4"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_5.jpeg"
+                            alt="product_id_5"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_6.jpeg"
+                            alt="product_id_6"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_7.jpeg"
+                            alt="product_id_7"
+                        >
+                    </a>
+                </div>
+                <div class="display-box">
+                    <a href="javascript:void(0)">
+                        <img
+                            src="../src/pic/product_imgs/product_id_8.jpeg"
+                            alt="product_id_8"
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer flex-column">
+        <div class="footer-content">
+            <div class="logo">
+                <img
+                    src="/src/logo/logo-footer.png"
+                    alt=""
+                />
+                <p>讓每一口的美味都能夠勾起心中的思念</p>
+            </div>
+            <ul class="contact">
+                <h4 class="content-title">聯絡資訊</h4>
+                <li>
+                    <i class="fas fa-location-arrow"></i>
+                    <p>236新北市土城區明德路一段291巷</p>
+                </li>
+                <li>
+                    <i
+                        class="fa fa-phone-alt"
+                        aria-hidden="true"
+                    ></i>
+                    <p>(02)2913-4776</p>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
+                </li>
+            </ul>
+            <ul class="social">
+                <h4 class="content-title">社群連結</h4>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-facebook-square"></i>
+                        FaceBook 粉專
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-line"></i>
+                        LINE 官方帳號
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-twitter-square"></i>
+                        Twitter 官方帳號
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="copyright">
+            Copyright © 2020 閒飯家常All Rights Reserved
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
     <script src="../js/home.js"></script>
 </body>
 

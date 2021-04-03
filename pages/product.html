@@ -19,102 +19,11 @@
     >
 </head>
 
-<body onload="pageLoad()">
+<body onload="productPageLoad()">
     <nav
         id="navID"
-        class="nav container bg-transparent"
-    ></nav>
-
-    <div class="banner banner-h4 pt-3x">
-        <img
-            src="https://images.unsplash.com/photo-1522336572468-97b06e8ef143?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1510&q=80"
-            alt=""
-        >
-    </div>
-
-    <section class="menu container justify-content-center">
-        <div class="product d-flex flex-column">
-            <div class="product-title d-flex">
-                <h4 class="font-h4 d-block">商品</h4>
-                <p class="font-2x d-block pl-4">PRODUCT LIST</p>
-            </div>
-            <div class="product-content"></div>
-        </div>
-        <aside class="menu-nav">
-            <ul class="nav-box">
-                <li class="current-select disable"><span></span>所有商品</li>
-                <li><span></span>推薦</li>
-                <li><span></span>主菜</li>
-                <li><span></span>配菜 / 湯品</li>
-            </ul>
-        </aside>
-    </section>
-
-    <footer class="footer bg-tt">
-        <div class="footer-content pt-6 pb-6">
-            <div class="logo-container col-33 flex-column align-items-center">
-                <img
-                    src="/src/logo/logo-footer.png"
-                    alt=""
-                />
-                <p>讓每一口的美味都能夠勾起心中的思念</p>
-            </div>
-            <div class="contact col-33">
-                <ul>
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>236新北市土城區明德路一段291巷</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone-alt"></i>
-                        <p>(02)2913-4776</p>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
-                    </li>
-                </ul>
-            </div>
-            <div class="social col-33">
-                <ul>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-facebook-square"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-line"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#">
-                            <i class="fab fa-twitter-square"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-content copyright bg-light">
-            <p>
-                Copyright © 2020 閒飯家常沒有股份有限公司 All Rights Reserved
-            </p>
-        </div>
-    </footer>
-
-    <div class="return-top-btn d-flex align-items-center justify-content-center">
-        <button
-            id="top-btn"
-            class="d-flex flex-column align-items-center justify-content-center"
-        >
-            <span>TOP</span>
-            <i class="fas fa-arrow-up"></i>
-        </button>
-    </div>
-
-
-
-    <template id="navTemplate">
+        class="nav container"
+    >
         <a
             href="../index.html"
             class="nav-brand"
@@ -124,7 +33,12 @@
                 alt=""
             />
         </a>
-        <ul class="nav-lists">
+        <div class="nav-menu hide-for-desktops">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-lists hide-for-mobile">
             <li class="list-item">
                 <a
                     href="../pages/home.html"
@@ -145,12 +59,253 @@
             </li>
             <li class="list-item">
                 <a
-                    href="../pages/about.html"
+                    href="../pages/member.html"
                     class="text-unstyle text-primary font-5x font-w6"
-                >關於我們</a>
+                >會員</a>
             </li>
         </ul>
-    </template>
+    </nav>
+
+    <div class="product-banner">
+        <img
+            src="https://images.unsplash.com/photo-1522336572468-97b06e8ef143?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1510&q=80"
+            alt=""
+        >
+    </div>
+
+    <section class="menu">
+        <div class="product-title flex flex-align-center">
+            <h4>商品</h4>
+            <p>PRODUCT LIST</p>
+        </div>
+        <select class="product-type">
+            <option value="">所有商品</option>
+            <option value="">主菜</option>
+            <option value="">配菜</option>
+            <option value="">湯品</option>
+        </select>
+        <div
+            id="product-content"
+            class="product-content"
+        ></div>
+        <aside class="side-nav product-nav">
+            <ul class="side-nav_wrap">
+                <li
+                    class="side-nav_item current-select"
+                    data-classification="allProduct"
+                >
+                    <span></span>
+                    所有商品
+                </li>
+                <li
+                    class="side-nav_item"
+                    data-classification="mainCourse"
+                ><span></span>主菜</li>
+                <li
+                    class="side-nav_item"
+                    data-classification="sideDish"
+                ><span></span>配菜</li>
+                <li
+                    class="side-nav_item"
+                    data-classification="soup"
+                ><span></span>湯品</li>
+            </ul>
+        </aside>
+    </section>
+
+    <footer class="footer flex-column">
+        <div class="footer-content">
+            <div class="logo">
+                <img
+                    src="/src/logo/logo-footer.png"
+                    alt=""
+                />
+                <p>讓每一口的美味都能夠勾起心中的思念</p>
+            </div>
+            <ul class="contact">
+                <h4 class="content-title">聯絡資訊</h4>
+                <li>
+                    <i class="fas fa-location-arrow"></i>
+                    <p>236新北市土城區明德路一段291巷</p>
+                </li>
+                <li>
+                    <i
+                        class="fa fa-phone-alt"
+                        aria-hidden="true"
+                    ></i>
+                    <p>(02)2913-4776</p>
+                </li>
+                <li>
+                    <i class="fas fa-clock"></i>
+                    <p>11:00 AM ~ 22:00 PM / 上午 11:00 ~ 晚上 10:00</p>
+                </li>
+            </ul>
+            <ul class="social">
+                <h4 class="content-title">社群連結</h4>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-facebook-square"></i>
+                        FaceBook 粉專
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-line"></i>
+                        LINE 官方帳號
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fab fa-twitter-square"></i>
+                        Twitter 官方帳號
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="copyright">
+            Copyright © 2020 閒飯家常All Rights Reserved
+        </div>
+    </footer>
+
+
+    <div class="product-buying hide">
+        <div class="product-buying-background"></div>
+        <div class="product-buying-card">
+            <div class="img-block">
+                <img
+                    src="../src/pic/product_imgs/product_id_2.jpeg"
+                    alt=""
+                >
+            </div>
+            <div class="product-buying-card-content">
+                <div class="content-detail">
+                    <h4>日式咖哩飯</h4>
+                    <h5>80.00 元/份</h5>
+                    <span>
+                        鹹酥雞，或稱鹽酥雞，是常見的臺灣小吃之一。主要成分是雞肉
+                        。鹽酥雞在台灣各地都有號稱是發源的老店，表示這種以雞肉塊沾粉油炸的小吃其實是多方源起的概念，有些人會稱鹹酥雞發明者是1975年臺北市西門町的「台灣第一家塩酥雞」，但事實上那只是一間調味粉批發商的名稱而已，以時間點來看更早創業的鹽酥雞攤位大有人在
+                    </span>
+                </div>
+                <div class="interactive-content">
+                    <div class="interactive-number-control">
+                        <select
+                            name=""
+                            id="buying-number"
+                        >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>
+                        <div id="buying-sum">總計: 80.00 元</div>
+                    </div>
+                    <button id="buying-btn">購買</button>
+                </div>
+            </div>
+            <button class="close-btn">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="48.262"
+                    height="48.422"
+                    viewBox="0 0 48.262 48.422"
+                >
+                    <g
+                        id="取消動作Btn"
+                        transform="translate(-832.625 -1611.967)"
+                    >
+                        <rect
+                            id="Rectangle_13"
+                            data-name="Rectangle 13"
+                            width="59.084"
+                            height="9.168"
+                            transform="translate(839.108 1612.127) rotate(45)"
+                            fill="#fa8c16"
+                        />
+                        <rect
+                            id="Rectangle_14"
+                            data-name="Rectangle 14"
+                            width="59.443"
+                            height="8.544"
+                            transform="translate(880.794 1618.009) rotate(135)"
+                            fill="#fa8c16"
+                        />
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <button
+        id="top-btn"
+        class="fixed-btn"
+    >
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <button
+        id="sidebar-cart-open"
+        class="fixed-btn"
+    >
+        <i
+            class="fa fa-shopping-cart"
+            aria-hidden="true"
+        ></i>
+    </button>
+
+    <div class="sidebar-cart fold">
+        <button class="sidebar-cart-close">
+            <i
+                class="fa fa-times"
+                aria-hidden="true"
+            ></i>
+        </button>
+        <div class="sidebar-cart-sum">
+            <h4>總額 : 480.00 元</h4>
+            <button>付款</button>
+        </div>
+        <ul class="sidebar-cart-lists">
+            <li>
+                <label for="cart-lists-1">
+                    <input
+                        type="checkbox"
+                        name=""
+                        id="cart-lists-1"
+                    >
+                    <img
+                        src="../src/pic/product_imgs/product_id_1.jpeg"
+                        alt=""
+                    >
+                    <div>
+                        <h4>日式咖哩飯</h4>
+                        <span>$80.00</span>
+                    </div>
+                </label>
+                <div class="number-control">
+                    <div class="number-editing-container">
+                        <button class="mius"></button>
+                        <span class="cart-list-number">1</span>
+                        <button class="plus"></button>
+                    </div>
+                    <button class="number-editing-cancel">
+                        <i
+                            class="fa fa-times"
+                            aria-hidden="true"
+                        ></i>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
+    <script src="../js/main.js"></script>
     <script src="../js/product.js"></script>
 </body>
 
