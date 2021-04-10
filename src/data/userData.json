@@ -79,28 +79,31 @@
         ],
         "cart" : [
             { 
-                "tempID" : 1,
+                "tempID" : 1617986892909,
                 "productName" : "日式咖哩飯",
                 "imgUrl" : "../src/pic/product_imgs/product_id_1.jpeg",
                 "quantity" : 5,
                 "amounts" : 80,
-                "type" : "冷凍食品"
+                "cookingType" : "冷凍食品",
+                "checked" : true
             },
             {
-                "tempID" : 2,
+                "tempID" : 1617986892910,
                 "productName" : "冬陰湯",
                 "imgUrl" : "../src/pic/product_imgs/product_id_4.jpeg",
                 "quantity" : 10,
                 "amounts" : 40,
-                "type" : "料理包"
+                "cookingType" : "料理包",
+                "checked" : false
             },
             {
-                "tempID" : 3,
+                "tempID" : 1617986892911,
                 "productName" : "經典義大利麵",
                 "imgUrl" : "../src/pic/product_imgs/product_id_5.jpeg",
                 "quantity" : 5,
                 "amounts" : 65,
-                "type" : "冷凍食品"
+                "cookingType" : "冷凍食品",
+                "checked" : false
             }
         ]
     },

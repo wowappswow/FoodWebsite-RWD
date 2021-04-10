@@ -32,38 +32,35 @@ let client = {
     }
 };
 
-function pageInit(){
-    // 抓取瀏覽器中的使用者 Key 是否為 NULL
-    let userLoginStatus = getUserStatus();
+// 畫面載入後進行動畫按鈕偵聽以及調整CSS樣式
+function formCSSAdjustForMobile(){
+    
+    let type = deviceType();
 
-    if(userLoginStatus){
-        document.querySelector('.client').classList.add('hide');
-        document.querySelector('.member').classList.remove('hide');
+    if(type === 'mobile' || type === 'tablets'){
 
-        memberPageInit();
+        let innerHeight = window.innerHeight;
+        let clientView = document.getElementById('client');
+
+        clientView.style.height = `${innerHeight - 60}px`;
+
+        console.log(clientView.style.height);
     }
-    // 初始化客戶端登入的動畫與樣式
-    else {
-        document.querySelector('.client').classList.remove('hide');
-        document.querySelector('.member').classList.add('hide');
 
-        pageAnimationInit();
-        formInit();
-    }
 }
 
-function pageAnimationInit(){
+function pageAnimationEventMount(){
     client.login.animate_item.forEach(el => el.classList.add('show'));
     client.animate_bg.classList = 'circle-login';
 
     let [to_sign_btn, to_login_btn] = 
         document.querySelectorAll('.client-toggle button');
 
-    to_sign_btn.addEventListener('click', pageToggling);
-    to_login_btn.addEventListener('click' , pageToggling);
+    to_sign_btn.addEventListener('click', pageAnimationHandler);
+    to_login_btn.addEventListener('click' , pageAnimationHandler);
 
 }
-function pageToggling(){
+function pageAnimationHandler(){
     if(this.innerHTML === '註冊'){
         client.animate_bg.classList = 'circle-sign';
     }
@@ -71,19 +68,20 @@ function pageToggling(){
         client.animate_bg.classList = 'circle-login';
     }
 
-    classToggle(client.login.animate_item, 'show');
-    classToggle(client.sign.animte_item, 'show');
+    // login item toggle
+    for(let item of client.login.animate_item){
+
+        item.classList.toggle('show');
+    }
+
+    // sign item toggle
+    for(let item of client.sign.animte_item){
+
+        item.classList.toggle('show');
+    }
+
 }
-function classToggle(target, className) {
-    target.forEach(element => {
-        if(element.classList.contains(`${className}`)){
-            element.classList.remove(`${className}`);
-        }
-        else{
-            element.classList.add(`${className}`);
-        }
-    });
-}
+
 
 // 初始化表單事件偵聽
 function formInit(){
@@ -106,8 +104,7 @@ function formInit(){
     });
 }
 
-// 1. Login Form dectect Input text error
-// 2. Update submit btn style and disabled value
+// 偵聽使用者輸入
 function loginInputErrorDetecting(input){
     // input box error msg
     let error_msg = input.parentNode.querySelector('span');
@@ -131,7 +128,7 @@ function loginInputErrorDetecting(input){
     formSubmitActive('login');
 }
 
-function signInputErrorDetecting(input){
+async function signInputErrorDetecting(input){
     // input box error msg
     let error_msg = input.parentNode.querySelector('span');
 
@@ -141,7 +138,7 @@ function signInputErrorDetecting(input){
 
     if(input.dataset.inputType === 'account'){
         client.sign.form.no_err[1] = inputEmptyError(input.value, error_msg);
-        client.sign.form.no_err[1] = inputExistError(input.value, error_msg);
+        client.sign.form.no_err[1] = await inputExistError(input.value, error_msg);
     }
 
     if(input.dataset.inputType === 'password'){
@@ -160,7 +157,7 @@ function signInputErrorDetecting(input){
     formSubmitActive('sign');
 }
 
-
+// 表單提交按鈕激活
 function formSubmitActive(type){
     if(type === 'login'){
         client.login.submit_btn.dom.disabled = !client.login.submit_btn.state;
@@ -170,7 +167,7 @@ function formSubmitActive(type){
     }
 }
 
-
+// 使用者輸入驗證
 function inputEmptyError(text, msg){
     if(text === ''){
         errorMsgRender(msg, '該欄位不能為空');
@@ -181,13 +178,21 @@ function inputEmptyError(text, msg){
         return true;
     }
 }
-function inputExistError(text, msg){
-    for(let obj of userDataList){
-        if(obj.account === text){
+async function inputExistError(text, msg){
+
+    let userDataList = await getData('../src/data/userData.json');
+
+    for(let index in userDataList){
+
+        let account = userDataList[index].info.id;
+
+        if(account === text){
+
             errorMsgRender(msg, '該帳戶已存在，請重新輸入');
             return false;
         }
     }
+
     return true;
 }
 function inputIsRepeatError(){
@@ -220,7 +225,7 @@ function errorMsgClear(target, bool){
 }
 
 
-
+// 表單提交後進行輸入欄位清空
 function formReset(type){
     if(type === 'login'){
         client.login.submit_btn.state = false;
@@ -240,6 +245,7 @@ function formReset(type){
     }
 }
 
+// 表單輸入提交驗證
 async function loginFormVerify(){
     console.log('You submit a login form');
     formReset("login");
@@ -252,20 +258,16 @@ async function loginFormVerify(){
         await idbOpen('userData', 2, userDataStore, result.data);
         window.location.href = '../pages/home.html';
     }
+    else{
+        messageReminderContentSet('帳號或密碼錯誤，請重新輸入', 'cancel', 'confirm');
+    }
 }
 
 function signFormVerify(dom){
     console.log('You submit a sign form');
     formReset('sign');
     let input_arr = dom.querySelectorAll('input:not([data-input-type="repassword"])');
-    // Push 資料到 userDataList
-    userDataList.push( new User(`${input_arr[1].value}`, `${input_arr[2].value}`, `${input_arr[0].value}`, null) );
-    // 在 session storage add userKey and it's value
-    window.localStorage.setItem('userKey', `${input_arr[1].value}`);
-    // redirect page to home page
-    // setTimeout(() => {
-    //     window.location.href = '../pages/home.html';
-    // }, 300);
+    console.log(input_arr);
 }
 
 function getLoginData() {
@@ -276,6 +278,7 @@ function getLoginData() {
     return {id, pw};
 }
 
+// 表單驗證結果回傳
 function userDataVerify(fetchData, userInputData){
 
     for(let item of fetchData){
@@ -297,11 +300,12 @@ function userDataVerify(fetchData, userInputData){
     }
 }
 
+// 表單驗證成功後將資料存在Indexed DB
 function userDataStore(db, data){
 
     let storeInfo = db.createObjectStore('info',{autoIncrement : true});
     let storeOrders = db.createObjectStore('orders',{keyPath : "serialNumber"});
-    let storeCart = db.createObjectStore('cart',{autoIncrement : true});
+    let storeCart = db.createObjectStore('cart',{keyPath : "tempID"});
 
     
     storeInfo.add(data.info);

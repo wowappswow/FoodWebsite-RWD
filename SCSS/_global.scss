@@ -24,3 +24,14 @@
         align-items: center;
     }
 }
+
+button {
+    border: transparent;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+
+    i {
+        pointer-events: none;
+    }
+}

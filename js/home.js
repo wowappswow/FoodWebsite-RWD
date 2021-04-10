@@ -189,3 +189,31 @@ function getWidth(target){
 
     return result;
 }
+
+
+
+// 2021/04/08
+function productDetailLookEventMount(){
+    
+    // Carousel
+    carousel.addEventListener('click', (e)=>{
+
+        if(e.target.dataset.productId !== undefined){
+
+            sessionStorage.setItem('productOpen', `${e.target.dataset.productId}`);
+            window.location.href = '../pages/product.html';
+        }
+    });
+
+    // Product Intro
+    let productIntro = document.querySelector('.product-intro');
+
+    productIntro.addEventListener('click', (e)=>{
+
+        if(e.target.dataset.productId !== undefined){
+
+            sessionStorage.setItem('productOpen', `${e.target.dataset.productId}`);
+            window.location.href = '../pages/product.html';
+        }
+    });
+}

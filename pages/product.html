@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0 user-scalable=no"
     >
     <title>閒飯家常</title>
     <link
@@ -79,10 +79,13 @@
             <p>PRODUCT LIST</p>
         </div>
         <select class="product-type">
-            <option value="">所有商品</option>
-            <option value="">主菜</option>
-            <option value="">配菜</option>
-            <option value="">湯品</option>
+            <option
+                value="allProduct"
+                selected="selected"
+            >所有商品</option>
+            <option value="mainCourse">主菜</option>
+            <option value="sideDish">配菜</option>
+            <option value="soup">湯品</option>
         </select>
         <div
             id="product-content"
@@ -258,51 +261,115 @@
         ></i>
     </button>
 
-    <div class="sidebar-cart fold">
-        <button class="sidebar-cart-close">
-            <i
-                class="fa fa-times"
-                aria-hidden="true"
-            ></i>
-        </button>
-        <div class="sidebar-cart-sum">
+    <div class="sidebar-cart">
+        <div class="sidebar-cart_title">
+            <button class="sidebar-cart_title-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-cart_footer">
             <h4>總額 : 480.00 元</h4>
             <button>付款</button>
         </div>
-        <ul class="sidebar-cart-lists">
-            <li>
-                <label for="cart-lists-1">
+        <ul class="sidebar-cart_lists-wrap">
+            <li class="sidebar-cart_lists-item">
+                <div class="sidebar-cart_lists-item_content">
                     <input
                         type="checkbox"
                         name=""
-                        id="cart-lists-1"
+                        id=""
                     >
                     <img
                         src="../src/pic/product_imgs/product_id_1.jpeg"
                         alt=""
                     >
-                    <div>
+                    <div class="sidebar-cart_lists-item_content-text">
                         <h4>日式咖哩飯</h4>
-                        <span>$80.00</span>
+                        <span>80</span>
                     </div>
-                </label>
-                <div class="number-control">
-                    <div class="number-editing-container">
-                        <button class="mius"></button>
-                        <span class="cart-list-number">1</span>
-                        <button class="plus"></button>
+                </div>
+                <div class="sidebar-cart_lists-item_control-wrap">
+                    <button class="sidebar-cart_lists-item_control-check">
+                        <i class="fas fa-check"></i>
+                    </button>
+                    <button class="sidebar-cart_lists-item_control-minus">
+                        <i class="fas fa-caret-left"></i>
+                    </button>
+                    <div class="sidebar-cart_lists-item_control-num">
+                        7
                     </div>
-                    <button class="number-editing-cancel">
-                        <i
-                            class="fa fa-times"
-                            aria-hidden="true"
-                        ></i>
+                    <button class="sidebar-cart_lists-item_control-plus">
+                        <i class="fas fa-caret-right"></i>
+                    </button>
+                    <button class="sidebar-cart_lists-item_control-delete">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
             </li>
         </ul>
     </div>
 
+    <div class="message-box">
+        <div class="message-box_modify">
+            <div class="message-box_modify-content">
+                <div class="message-box_modify-content_pw">
+                    <label for="modify-old-pw">
+                        <p>舊密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-old-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-new-pw">
+                        <p>新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-new-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-renew-pw">
+                        <p>重複新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-renew-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                </div>
+                <div class="message-box_modify-content_text hide">
+                    <label for="modify-text">
+                        <p>新的</p>
+                        <input
+                            type="text"
+                            id="modify-text"
+                        >
+                    </label>
+                </div>
+            </div>
+            <button class="message-box_modify-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_modify-btn confirm">
+                確認
+            </button>
+        </div>
+        <div class="message-box_reminder">
+            <div class="message-box_reminder-content">
+                <p>測試用內容。</p>
+            </div>
+            <button class="message-box_reminder-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_reminder-btn confirm">
+                確認
+            </button>
+        </div>
+    </div>
 
 
     <script src="../js/main.js"></script>

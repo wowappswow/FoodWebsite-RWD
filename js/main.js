@@ -1,3 +1,11 @@
+// cartStack 用於紀錄刪除商品物件時的dom，以便後續對其進行操作
+// currentView 用於行動裝置上紀錄當前已開啟的資料
+let cartStack =  [];
+let currentPage = 'index'; // 默認值
+let currentView;
+let currentCartItem;
+
+
 //  DIERCTORY
 /*
     Navbar (Header)
@@ -107,26 +115,6 @@ function eventListenerSetting(target, action,handlerFn){
 
 
 
-//* Sidebar Cart *//
-// document.querySelector('.number-editing-cancel').addEventListener('click', ()=>{
-//     document.querySelector('.number-control').classList.remove('unfold');
-// });
-
-
-// let num = document.querySelector('.cart-list-number');
-// num.addEventListener('click', ()=>{
-//     document.querySelector('.number-control').classList.add('unfold');
-// });
-
-// document.querySelector('.sidebar-cart-close').addEventListener('click', ()=>{
-//     document.querySelector('.sidebar-cart').classList.add('fold');
-// });
-
-// document.getElementById('sidebar-cart-open').addEventListener('click', ()=>{
-//     document.querySelector('.sidebar-cart').classList.remove('fold');
-// });
-
-
 
 
 
@@ -211,13 +199,173 @@ async function idbExist(databaseName){
     return false;
 }
 
+async function cartItemUpdateIDB(targetID, targetItem, updateData){
+    
+    if(typeof targetID === 'string') targetID = parseInt(targetID);
+
+    let data = await idbCursor('userData', 'cart');
+    let matchData;
+
+    // Debug
+    // console.log(targetID, targetItem, updateData);
+
+
+    // 讀取匹配的資料項目
+    for(let index in data){
+
+        if(data[index].tempID === targetID){
+            
+            matchData = data[index];
+            
+            break;
+        }
+    }
+
+    matchData[targetItem] = updateData;
+
+    let result = await idbPut('userData', 'cart', {
+        data : matchData,
+    });
+
+    return result;
+}
+
+
 // TEST END
+
+
+
+
+// Message Implement
+function messageModifyEventMount(){
+
+    const modify = document.querySelector('.message-box_modify');
+    const [modify_close, modify_confirm] = 
+        modify.querySelectorAll('.message-box_modify .message-box_modify-btn');
+    const modify_inputs = [...modify.querySelectorAll('input')];
+
+    // 清空使用者輸入內容
+    modify_close.addEventListener('click', (e)=>{
+
+        for(let input of modify_inputs){
+            input.value = '';
+        }
+        modify.classList.remove('show');
+    });
+
+    modify_confirm.addEventListener('click', async (e) =>{
+        
+        let msgType = modify.dataset.msgType;
+
+        let result =  await memberInfoModify(msgType, modify_inputs.slice(0,3),  modify_inputs.slice(3));
+
+        if(!result){
+
+            messageReminderContentSet('密碼錯誤，請重新輸入', 'cancel', 'confirm');
+            return ;
+        }
+        
+        for(let input of modify_inputs){
+            input.value = '';
+        }
+        modify.classList.remove('show');
+    });
+}
+function messageModifyOpen(msgType){
+    
+    const modify = document.querySelector('.message-box_modify');
+    const [modify_pw, modify_text] = modify.querySelectorAll('.message-box_modify-content > *');
+
+    modify.dataset.msgType = msgType;
+    
+    if(msgType === 'password'){
+
+        modify_pw.classList.remove('hide');
+        modify_text.classList.add('hide');
+        modify.classList.add('show');
+        return ;
+    }
+
+    let modify_textTitle = modify_text.querySelector('p');
+
+    modify_textTitle.innerHTML = (msgType === 'phone') ? '新的電話號碼' : '新的收件地址';
+    modify_pw.classList.add('hide');
+    modify_text.classList.remove('hide');
+    modify.classList.add('show');
+    return ;
+}
+
+function messageReminderContentSet(text, closeAttr, confirmAttr){
+
+    const reminder = document.querySelector('.message-box_reminder');
+    const [reminder_close, reminder_confirm] = reminder.querySelectorAll('.message-box_reminder-btn') ;
+    const reminder_textArea = reminder.querySelector('.message-box_reminder-content p');
+
+    reminder.classList.add('show');
+
+    reminder_close.dataset.act = closeAttr;
+    reminder_confirm.dataset.act = confirmAttr;
+
+    reminder_textArea.innerHTML = text;
+}
+
+function messageReminderEventMount(){
+    const reminder = document.querySelector('.message-box_reminder');
+
+    reminder.addEventListener('click', async (e)=>{
+
+        if(e.target.classList.contains('close')){
+
+            let act =  e.target.dataset.act;
+            
+            if(act === 'cancel'){
+
+                reminder.classList.remove('show');
+            }
+
+            if(act === 'turnToLogin'){
+                window.location.href = '../pages/member.html';
+            }
+        }
+
+        if(e.target.classList.contains('confirm')){
+
+            let act =  e.target.dataset.act;
+
+            if(act === 'delete'){
+
+                await idbRemove('userData', 'cart', parseInt(cartStack[0].dataset.tempId));
+
+                cartStack[0].remove();
+                cartStack = [];
+                
+                reminder.classList.remove('show');
+
+                if(currentPage === 'product') sideCartFooterRender();
+                if(currentPage === 'member') cartFooterSumRender();
+            }
+
+            if(act === 'confirm'){
+
+                reminder.classList.remove('show');
+            }
+
+            if(act === 'turnToLogin'){
+                window.location.href = '../pages/member.html';
+            }
+        }
+    });
+}
+
 
 
 
 
 // Page Load Func.
 function indexPageLoad(){
+
+    currentPage = 'index';
+
     const animationList = [...document.querySelectorAll('.index-banner-item')];
 
     if(animationList.length < 1){
@@ -236,6 +384,8 @@ function indexPageLoad(){
 
 function homePageLoad(){
 
+    currentPage = 'home';
+
     let type = deviceType();
 
     if(type === 'laptops' || type === 'desktops'){
@@ -243,10 +393,14 @@ function homePageLoad(){
         carouselInit();
         carouselEventAdd();
     }
+
+    productDetailLookEventMount();
 }
 
 async function productPageLoad(){
     
+    currentPage = 'product';
+
     console.log('productPageLoad is call');
     let alreadyInit = await idbExist('productData');
 
@@ -266,6 +420,50 @@ async function productPageLoad(){
     buyingCardEventMount();
 
     productNavEventMount();
+
+    buyingCardBeOpen();
+
+    sideCartListItemRender();
+
+    sideCartEventMount();
+
+    typeSelectEventMountForMobile();
+
+    messageModifyEventMount();
+
+    messageReminderEventMount();
+}
+
+function servicePageLoad(){
+    currentPage = 'service';
+}
+
+function memberPageLoad(){
+    
+    currentPage = 'member';
+
+    // 抓取瀏覽器中的使用者 Key 是否為 NULL
+    let userLoginStatus = getUserStatus();
+
+    if(userLoginStatus){
+        document.querySelector('.client').classList.add('hide');
+        document.querySelector('.member').classList.remove('hide');
+
+        memberPageInit();
+    }
+    // 初始化客戶端登入的動畫與樣式
+    else {
+        document.querySelector('.client').classList.remove('hide');
+        document.querySelector('.member').classList.add('hide');
+
+        // 調整CSS樣式在Mobile broswer的影響
+        formCSSAdjustForMobile();
+
+        pageAnimationEventMount();
+        formInit();
+    }
+
+    messageReminderEventMount();
 }
 
 
@@ -321,8 +519,55 @@ async function idbCursor(dbName, storeName){
 }
 
 
-async function idbRemove(){
+async function idbRemove(dbName,storeName, key){
     
+    let db = await idbOpen(dbName, 2);
+
+    return new Promise((resolve, reject)=>{
+
+        let tx = db.transaction([storeName], "readwrite");
+        let store = tx.objectStore(storeName);
+
+        store.delete(key);
+
+        tx.oncomplete = (e)=>{
+            resolve(true);
+        };
+
+        tx.onerror = (e)=>{
+            reject(e);
+        };
+    });
 }
 
 
+async function idbPut(dbName,storeName, dataObj){
+    
+    let db = await idbOpen(dbName,2);
+
+    return new Promise( (resolve, reject)=>{
+
+        let tx = db.transaction([storeName], "readwrite");
+        let store = tx.objectStore(storeName);
+        let request;
+
+        if(dataObj.key === undefined || dataObj.key === null){
+
+            request = store.put(dataObj.data);
+        }
+        else{
+
+            request =  store.put(dataObj.data, dataObj.key);
+        }
+
+        request.onsuccess = (e)=>{
+
+            resolve(true);
+        };
+
+        request.onerror = (e)=>{
+
+            reject(e);
+        };
+    } );
+}

@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1.0 user-scalable=no"
     >
     <title>閒飯家常</title>
     <link
         rel="shortcut icon"
-        href="src/ico/food-ico.png"
+        href="../src/ico/food-ico.png"
         type="image/vnd.microsoft.icon"
     />
     <link
@@ -19,7 +19,7 @@
     >
 </head>
 
-<body onload="pageInit()">
+<body onload="memberPageLoad()">
     <div id="main">
         <nav
             id="navID"
@@ -1694,8 +1694,8 @@
                         ></i>
                     </label>
                     <input
-                        type="text"
-                        placeholder="電子郵件或電話號碼"
+                        type="email"
+                        placeholder="電子郵件"
                         id="sign-account"
                         data-input-type="account"
                     />

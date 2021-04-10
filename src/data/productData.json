@@ -2,74 +2,74 @@
     "products" : [
         {
             "id" : 1, 
-            "imgSrc" : "../src/pic/product_imgs/product_id_1.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_1.jpeg",
             "type" : "mainCourse",
             "productName" : "日式咖哩飯",
             "productPrice" :  75,
-            "recommend":false,
+            "cookingType":"料理包",
             "intro":"是一種將米飯配上日式咖哩汁一同進食的日本料理。日式咖哩口感香滑濃稠、味道較甜，其配上白飯而成的日式咖哩飯不僅在日本中小學校供應的學校午餐中名列最受歡迎食物種類的前茅，更常被稱為「國民的食物」，在日本廣受歡迎"
         },
         {
             "id" : 2,
-            "imgSrc" : "../src/pic/product_imgs/product_id_2.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_2.jpeg",
             "type" : "sideDish",
             "productName" : "鹹酥炸雞",
             "productPrice" :  50,
-            "recommend":false,
+            "cookingType":"冷凍食品",
             "intro":"鹹酥雞，或稱鹽酥雞，是常見的臺灣小吃之一。主要成分是雞肉 。鹽酥雞在台灣各地都有號稱是發源的老店，表示這種以雞肉塊沾粉油炸的小吃其實是多方源起的概念，有些人會稱鹹酥雞發明者是1975年臺北市西門町的「台灣第一家塩酥雞」"
         },
         {
             "id" : 3,
-            "imgSrc" : "../src/pic/product_imgs/product_id_3.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_3.jpeg",
             "type" : "sideDish",
             "productName" : "黃金炸豬排",
             "productPrice" :  80,
-            "recommend":true,
+            "cookingType":"冷凍食品",
             "intro":"日式豬排，以吉列的方式炸豬排。日式豬排選用較厚身的豬裡脊，裹上蛋汁、麵包屑及炸粉油炸，最後切成數塊淋上豬排醬，佐以高麗菜絲食用。 日式豬排乃洋食的一種，現時已漸日本化。最常見的吃法包括配以白飯、味噌湯和漬物"
         },
         {
             "id" : 4,
-            "imgSrc" : "../src/pic/product_imgs/product_id_4.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_4.jpeg",
             "type" : "soup",
             "productName" : "冬陰湯",
             "productPrice" :  40,
-            "recommend":true,
+            "cookingType":"料理包",
             "intro":"冬陰湯，是一道著名的泰國酸辣湯，由南薑、酸子、香茅、青蔥、酸檸檬、辣椒和魚露烹飪而成。英語音譯為Tom yam，其中，Tom表示湯，yam表示酸辣之意。當中最常見的烹調法是加蝦和草菇、以魚露調味並形成乳狀質感的酸辣蝦湯"
         },
         {
             "id" : 5,
-            "imgSrc" : "../src/pic/product_imgs/product_id_5.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_5.jpeg",
             "type" : "mainCourse",
             "productName" : "經典義大利麵",
             "productPrice" :  65,
-            "recommend":true,
+            "cookingType":"冷凍食品",
             "intro":"義大利麵，泛指所有源自義大利的麵食。在義大利，一般會用「Pasta」來稱呼各種由麵粉及水、有時或會加入雞蛋。狹義的義式麵體是由杜蘭麵粉所製，廣義則可包括由其他穀物為原料所製成的麵體"
         },
         {
             "id" : 6,
-            "imgSrc" : "../src/pic/product_imgs/product_id_6.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_6.jpeg",
             "type" : "mainCourse",
             "productName" : "味噌烏龍面",
             "productPrice" :  65,
-            "recommend":true,
+            "cookingType":"冷凍食品",
             "intro":"以昆布為主的味噌搭配富有嚼勁的烏龍麵"
         },
         {
             "id" : 7,
-            "imgSrc" : "../src/pic/product_imgs/product_id_7.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_7.jpeg",
             "type" : "soup",
             "productName" : "四季時蔬湯",
             "productPrice" :  80,
-            "recommend":false,
+            "cookingType":"料理包",
             "intro":"台灣的冬天盛產葉菜類蔬菜，根莖、塊莖類也是季節，今天的四位主角牛蒡、菠菜、南瓜、白花椰菜在冬天時正值幼嫩、甘甜又便宜的季節，稍做變化來製作濃湯、粥品，冬天早晨喝一碗，身體暖活又好吸收"
         },
         {
             "id" : 8,
-            "imgSrc" : "../src/pic/product_imgs/product_id_8.jpeg",
+            "imgUrl" : "../src/pic/product_imgs/product_id_8.jpeg",
             "type" : "soup",
             "productName" : "奶油燉菜濃湯",
             "productPrice" :  50,
-            "recommend":true,
+            "cookingType":"料理包",
             "intro":"奶油燉菜，是一道美味的家常菜。主要原料有雞腿肉，胡蘿蔔，香菇，土豆，圓蔥，黃油，小麥粉，牛奶，料酒，黑胡椒碎粒。在向湯中添加麵糊時要慢慢地漸漸倒，並同時用打蛋器攪拌，使之和湯能更加細膩地融合"
         }
     ]
