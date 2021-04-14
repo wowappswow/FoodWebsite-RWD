@@ -15,14 +15,16 @@
 
 
 
-// Imoprt
+
+@import 'mixin';
+
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css');
 @import 'reset';
-@import 'variable';
-@import 'mixin';
 @import 'global';
+@import 'variable';
 @import 'nav';
 @import 'footer';
+
 
 
 // For Index Page CSS

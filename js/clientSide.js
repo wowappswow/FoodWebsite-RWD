@@ -241,6 +241,11 @@ function formReset(type){
         for(let index in client.sign.form.no_err)
             { client.sign.form.no_err[index] = false;}
         formSubmitActive('sign');
+
+        let inputs = client.sign.form.dom.querySelectorAll('input');
+
+        inputs.forEach( el => el.value='');
+
         console.log('reset sign form');
     }
 }
@@ -248,8 +253,7 @@ function formReset(type){
 // 表單輸入提交驗證
 async function loginFormVerify(){
     console.log('You submit a login form');
-    formReset("login");
-
+    
     let data =  await getData('../src/data/userData.json');
     let result = userDataVerify(data, getLoginData());
 
@@ -261,13 +265,29 @@ async function loginFormVerify(){
     else{
         messageReminderContentSet('帳號或密碼錯誤，請重新輸入', 'cancel', 'confirm');
     }
+
+    formReset("login");
 }
 
-function signFormVerify(dom){
+async function signFormVerify(dom){
     console.log('You submit a sign form');
+    
+    let [userName, userEmail, userPw] = dom.querySelectorAll('input:not([data-input-type="repassword"])');
+
+    // indexedDB 建立資料
+    let info = {
+        "id":`${userEmail.value}`,
+        "pw":`${userPw.value}`,
+        "name":`${userName.value}`,
+        "phone":"未設置",
+        "address":"未設置"
+    };
+    await idbOpen('userData', 2, userSignDataStore, info);
+
+    userValidityPeriodSet(`${userEmail.value}`);
+
+    // 清空輸入
     formReset('sign');
-    let input_arr = dom.querySelectorAll('input:not([data-input-type="repassword"])');
-    console.log(input_arr);
 }
 
 function getLoginData() {
@@ -284,13 +304,8 @@ function userDataVerify(fetchData, userInputData){
     for(let item of fetchData){
         if(userInputData.id === item.info.id && 
             userInputData.pw === item.info.pw){
-            let timer = new Date();
 
-            localStorage.setItem('userKey', userInputData.id);
-
-            localStorage.setItem('tabCounter', 1);
-
-            sessionStorage.setItem('tab', timer.getTime());
+            userValidityPeriodSet(userInputData.id);
 
             return {ok:true, data:item};
         }
@@ -306,7 +321,6 @@ function userDataStore(db, data){
     let storeInfo = db.createObjectStore('info',{autoIncrement : true});
     let storeOrders = db.createObjectStore('orders',{keyPath : "serialNumber"});
     let storeCart = db.createObjectStore('cart',{keyPath : "tempID"});
-
     
     storeInfo.add(data.info);
 
@@ -316,4 +330,13 @@ function userDataStore(db, data){
     for(let index in data.cart){
         storeCart.add(data.cart[index]);
     }
+}
+
+function userSignDataStore(db, data){
+    
+    let storeInfo = db.createObjectStore('info',{autoIncrement : true});
+    let storeOrders = db.createObjectStore('orders',{keyPath : "serialNumber"});
+    let storeCart = db.createObjectStore('cart',{keyPath : "tempID"});
+
+    storeInfo.add(data);
 }

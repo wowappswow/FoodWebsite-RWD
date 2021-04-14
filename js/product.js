@@ -99,8 +99,8 @@ function buyingCardEventMount(){
     const buyingBtn = document.getElementById('buying-btn');
     buyingBtn.addEventListener('click', ()=>{
         
-        if(localStorage.getItem('userKey') === undefined || 
-        localStorage.getItem('userKey') === null){
+        if(localStorage.getItem('userValidity') === undefined || 
+        localStorage.getItem('userValidity') === null){
 
             alert('親愛的使用者您還沒有進行登入，請先進行登入後再執行購買!');
 

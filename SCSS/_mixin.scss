@@ -6,7 +6,6 @@ Tablet – sm ( 768~991px )
 Desktop – md ( 992~1200px )
 Large Desktop – lg ( >= 1200px )
 */
-
 $breakpoint-up : (mobile:481px, tablets:769px, laptops:1025px, desktop-lg:1200px, desktop-xl:1440px);
 $breakpoint-down : (mobile:480px, tablets:768px, laptops:1024px, desktop-lg:1199px, desktop-xl:1439px);
 
@@ -141,5 +140,3 @@ $breakpoint-down : (mobile:480px, tablets:768px, laptops:1024px, desktop-lg:1199
         font-size: nth($font-list, 3);
     }
 }
-
-//2021/03/11

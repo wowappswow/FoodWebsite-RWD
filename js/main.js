@@ -122,26 +122,28 @@ function eventListenerSetting(target, action,handlerFn){
 
 
 
-function getUserStatus(){
+async function getUserStatus(){
 
-    let userKey = localStorage.getItem('userKey');
-    let tabCounter = localStorage.getItem('tabCounter');
-    let tab = sessionStorage.getItem('tab');
+    let userValidity = localStorage.getItem('userValidity');
     
     // 使用者沒有登入
-    if(userKey === null){
-        return;
+    if(userValidity === null){
+        console.log('使用者沒有登入');
+        return false;
     }
 
-    // 使用者保持登入，並開啟新的分頁
-    if(tab === null){
+    let [account, timeStamp] = JSON.stringify(userValidity).split(',');
 
-        let timer = new Date();
-        sessionStorage.setItem('tab', timer.getTime());
+    let periodStatus =  userValidityPeriodCheck(timeStamp, 120);
 
-        // 紀錄使用者開啟的分頁數量
-        localStorage.removeItem('tabCounter');
-        localStorage.setItem('tabCounter', ( parseInt(tabCounter) + 1));
+    if(!periodStatus){
+
+        localStorage.clear();
+
+        if( idbExist('userData') ) idbDeleteDB('userData');
+        if( idbExist('productData') ) idbDeleteDB('productData');
+
+        return false;
     }
 
     return true;
@@ -184,19 +186,6 @@ async function getData(url){
     }catch(e){
         console.log(e);
     }
-}
-
-async function idbExist(databaseName){
-    
-    let exist = await indexedDB.databases();
-    
-    for(let index in exist){
-
-        if(exist[index].name === databaseName)
-            return true;
-    }
-
-    return false;
 }
 
 async function cartItemUpdateIDB(targetID, targetItem, updateData){
@@ -438,12 +427,14 @@ function servicePageLoad(){
     currentPage = 'service';
 }
 
-function memberPageLoad(){
+async function memberPageLoad(){
     
     currentPage = 'member';
 
     // 抓取瀏覽器中的使用者 Key 是否為 NULL
-    let userLoginStatus = getUserStatus();
+    let userLoginStatus = await getUserStatus();
+
+    console.log(userLoginStatus);
 
     if(userLoginStatus){
         document.querySelector('.client').classList.add('hide');
@@ -517,8 +508,6 @@ async function idbCursor(dbName, storeName){
         };
     });
 }
-
-
 async function idbRemove(dbName,storeName, key){
     
     let db = await idbOpen(dbName, 2);
@@ -539,8 +528,6 @@ async function idbRemove(dbName,storeName, key){
         };
     });
 }
-
-
 async function idbPut(dbName,storeName, dataObj){
     
     let db = await idbOpen(dbName,2);
@@ -570,4 +557,56 @@ async function idbPut(dbName,storeName, dataObj){
             reject(e);
         };
     } );
+}
+async function idbExist(dbName){
+    
+    let exist = await indexedDB.databases();
+    
+    for(let index in exist){
+
+        if(exist[index].name === dbName)
+            return true;
+    }
+
+    return false;
+}
+
+async function idbDeleteDB(dbName){
+    
+    let deleteReq = window.indexedDB.deleteDatabase(dbName);
+
+    return new Promise((resolve, reject)=>{
+
+        deleteReq.onsuccess = (e)=>{ resolve(e); };
+
+        deleteReq.onerror = (e)=>{ reject(e); };
+    });
+}
+
+
+// 使用者登入狀態
+function userValidityPeriodSet(userID){
+    
+    let tiemStamp = new Date();
+
+    localStorage.setItem('userValidity', [
+        userID,
+        tiemStamp.getTime()
+    ]);
+}
+
+function userValidityPeriodCheck(userTimeStamp, validityPeriod){
+
+    let currentTimeStamp = new Date();
+
+    if( typeof userTimeStamp  === 'string') userTimeStamp = parseFloat(userTimeStamp);
+
+    let timeInterval = parseFloat((currentTimeStamp.getTime() - userTimeStamp) / 1000).toFixed(0);
+
+    if( (timeInterval / validityPeriod) >=  1){
+
+        return false;
+    }
+    
+    return true;
 }
