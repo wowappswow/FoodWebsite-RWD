@@ -43,28 +43,21 @@
         </div>
         <ul class="nav-lists hide-for-mobile">
             <li class="list-item">
-                <a
-                    href="./pages/home.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >首頁</a>
+                <a href="./pages/home.html">首頁</a>
             </li>
             <li class="list-item">
-                <a
-                    href="./pages/product.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >商品</a>
+                <a href="./pages/product.html">商品</a>
             </li>
             <li class="list-item">
-                <a
-                    href="./pages/service.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >服務</a>
+                <a href="./pages/service.html">服務</a>
             </li>
             <li class="list-item">
-                <a
-                    href="./pages/member.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >會員</a>
+                <a href="./pages/member.html">會員</a>
+            </li>
+            <li class="list-item">
+                <a id="user-login-sign-btn">
+                    登入
+                </a>
             </li>
         </ul>
     </nav>
@@ -79,6 +72,68 @@
             購買 / 訂位
         </a>
     </section>
+
+    <div class="message-box">
+        <div class="message-box_modify">
+            <div class="message-box_modify-content">
+                <div class="message-box_modify-content_pw">
+                    <label for="modify-old-pw">
+                        <p>舊密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-old-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-new-pw">
+                        <p>新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-new-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-renew-pw">
+                        <p>重複新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-renew-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                </div>
+                <div class="message-box_modify-content_text hide">
+                    <label for="modify-text">
+                        <p>新的</p>
+                        <input
+                            type="text"
+                            id="modify-text"
+                        >
+                    </label>
+                </div>
+            </div>
+            <button class="message-box_modify-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_modify-btn confirm">
+                確認
+            </button>
+        </div>
+        <div class="message-box_reminder">
+            <div class="message-box_reminder-content">
+                <p>測試用內容。</p>
+            </div>
+            <button class="message-box_reminder-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_reminder-btn confirm">
+                確認
+            </button>
+        </div>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

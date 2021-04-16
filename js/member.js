@@ -20,23 +20,28 @@ async function memberPageInit(){
 
     // 事件偵聽掛載
     memberContentEventMount();
+
+    // 偵測是否透過商品頁面的購物車導覽進來
+    linkToOpenContent('cartLists');
 }
+
 
 
 // 導覽列事件偵聽與其處理函式
 function navEventMount(){
-    const member_nav_list = member.querySelectorAll('.member-nav li');
-    if(member_nav_list.length < 1) return console.log('Can not found nav item.');
+    const memberNavList = member.querySelectorAll('.member-nav li');
+    if(memberNavList.length < 1) return console.log('Can not found nav item.');
     
-    for(let iterator of member_nav_list){
+    for(let iterator of memberNavList){
         iterator.addEventListener('click', navEventHandler);
     }
 }
+
 function navEventHandler(){
 
-    const nav_items = member.querySelectorAll('.member-nav li');
+    const navItems = member.querySelectorAll('.member-nav li');
 
-    for(let item of nav_items){
+    for(let item of navItems){
         item.classList = 'member-nav_item';
     }
 
@@ -46,31 +51,33 @@ function navEventHandler(){
 }
 
 
+
 // 使用者中心抓取IndexedDB資料並將其渲染到HTML結構上
 async function memberContentInit(){
 
     // 基本資料
-    let basic_data = await idbCursor('userData', 'info');
-    let basic_wrap = member.querySelector('.basic-info');
+    let basicData = await idbCursor('userData', 'info');
+    let basicWrap = member.querySelector('.basic-info');
 
-    if(basic_data.length <= 1 ) basic_data = basic_data[0];
+    if(basicData.length <= 1 ) basicData = basicData[0];
 
-    memberInfoRender(basic_data, basic_wrap);
+    memberInfoRender(basicData, basicWrap);
 
 
     // 購物車
-    let cart_data = await idbCursor('userData', 'cart');
-    let cart_item = member.querySelector('.cart-lists_item');
+    let cartData = await idbCursor('userData', 'cart');
+    let cartItem = member.querySelector('.cart-lists_item');
 
-    memberCartRender(cart_data, cart_item);
+    memberCartRender(cartData, cartItem);
 
     
     // 訂單
-    let order_data = await idbCursor('userData', 'orders');
-    let order_list = member.querySelector('.user-order-list_wrap');
+    let orderData = await idbCursor('userData', 'orders');
+    let orderList = member.querySelector('.user-order-list_wrap');
 
-    memberOrderRender(order_data, order_list);
+    memberOrderRender(orderData, orderList);
 }
+
 function memberInfoRender(data, wrap){
     let listItems = wrap.querySelectorAll('li .basic-info_item-content');
 
@@ -84,6 +91,7 @@ function memberInfoRender(data, wrap){
 
     return;
 }
+
 function memberCartRender(data, items){
 
     items.innerHTML = '';
@@ -139,19 +147,22 @@ function memberCartRender(data, items){
         allChecked &= iterator.checked;
     }
 
+    if(data.length < 1) allChecked = false;
+
     if(allChecked){
 
-        const cart_titleCheck = document.getElementById('cart-lists_title-select-all');
-        const cart_footerCheck = document.getElementById('cart-lists_footer-select-all');
+        const cartTitleCheck = document.getElementById('cart-lists_title-select-all');
+        const cartFooterCheck = document.getElementById('cart-lists_footer-select-all');
 
-        cart_titleCheck.checked = allChecked;
-        cart_footerCheck.checked = allChecked;
+        cartTitleCheck.checked = allChecked;
+        cartFooterCheck.checked = allChecked;
     }
 
     cartFooterSumRender();
 
     return;
 }
+
 function memberOrderRender(data, target, option){
 
     // Order List
@@ -232,37 +243,39 @@ function memberOrderRender(data, target, option){
     `;
 }
 
+
+
 // 使用者中心事件偵聽掛載和畫面資料切換控制
 function memberContentEventMount(){
 
     // 基本資料
-    const [basic_phoneBtn, basic_addressBtn, basic_passwordBtn] = member.querySelectorAll('.basic-info_item .fa-edit');
+    const [basicPhoneBtn, basicAddressBtn, basicPasswordBtn] = member.querySelectorAll('.basic-info_item .fa-edit');
 
         // 設定外部容器屬性以便觸發事件偵聽器可以存取
-    basic_phoneBtn.addEventListener('click', () => messageModifyOpen('phone'));
+    basicPhoneBtn.addEventListener('click', () => messageModifyOpen('phone'));
 
-    basic_addressBtn.addEventListener('click', () => messageModifyOpen('address'));
+    basicAddressBtn.addEventListener('click', () => messageModifyOpen('address'));
 
-    basic_passwordBtn.addEventListener('click', () => messageModifyOpen('password'));
+    basicPasswordBtn.addEventListener('click', () => messageModifyOpen('password'));
 
 
     // 購物車
-    const cart_titleCheck = document.getElementById('cart-lists_title-select-all');
-    const cart_footerCheck = document.getElementById('cart-lists_footer-select-all');
+    const cartTitleCheck = document.getElementById('cart-lists_title-select-all');
+    const cartFooterCheck = document.getElementById('cart-lists_footer-select-all');
 
-    cart_titleCheck.addEventListener('change', cartCheckBoxHandler);
-    cart_footerCheck.addEventListener('change', cartCheckBoxHandler);
+    cartTitleCheck.addEventListener('change', cartCheckBoxHandler);
+    cartFooterCheck.addEventListener('change', cartCheckBoxHandler);
 
-    const cart_items = member.querySelector('.cart-lists_item');
-    cart_items.addEventListener('click', (e)=>{
+    const cartItems = member.querySelector('.cart-lists_item');
+    cartItems.addEventListener('click', (e)=>{
         cartItemsControl(e.target);
     });
     
 
     // 訂單
     const order = member.querySelector('.user-order');
-    const order_backBtn = member.querySelector('.user-order-detail_footer-back');
-    const order_payTheBill = member.querySelector('.cart-lists_footer-buying');
+    const orderBackBtn = member.querySelector('.user-order-detail_footer-back');
+    const orderPayTheBill = member.querySelector('.cart-lists_footer-buying');
 
 
     order.addEventListener('click', (e)=>{
@@ -273,24 +286,24 @@ function memberContentEventMount(){
         }
     });
 
-    order_backBtn.addEventListener('click', orderContentToggle);
+    orderBackBtn.addEventListener('click', orderContentToggle);
 
-    order_payTheBill.addEventListener('click', ()=>{
-        // alert('你點擊了購買按鈕');
+    orderPayTheBill.addEventListener('click', ()=>{
 
         cartPayTheBill();
     });
 
 }
+
 function memberContentDisplayControl(){
     let device = deviceType();
-    const member_content = member.querySelector('.member-content');
-    const member_content_item = member.querySelectorAll('.member-content > *:not(.member-content_back-btn)');
+    const memberContent = member.querySelector('.member-content');
+    const memberContentItem = member.querySelectorAll('.member-content > *:not(.member-content_back-btn)');
 
     // Content BackBtn. For Mobile device will lock body scroll.
     if(this.classList.contains('member-content_back-btn')){
         document.body.classList.remove('lock-scroll');
-        member_content.classList.remove('show');
+        memberContent.classList.remove('show');
         member.querySelector('.user-order').scrollTo(0, 0);
 
         if(currentView.dataset.type === 'orderLists'){
@@ -308,11 +321,11 @@ function memberContentDisplayControl(){
     // For mobile that enter content view
     if(device === 'mobile'){
         document.body.classList.add('lock-scroll');
-        member_content.classList.add('show');
+        memberContent.classList.add('show');
     }
 
     // Toggle content view
-    for(let iterator of member_content_item){
+    for(let iterator of memberContentItem){
         iterator.classList.add('hide');
 
         if(iterator.dataset.type === this.dataset.classification) {
@@ -323,17 +336,19 @@ function memberContentDisplayControl(){
     }
 }
 
+
+
 // 使用者中心各分類資料操作與使用者互動
-async function memberInfoModify(type, inputs_pw, input_text){
+async function memberInfoModify(type, inputsPw, inputText){
     
     let data = await idbCursor('userData', 'info');
     data = data[0];
 
     if(type === 'password'){
         
-        if((inputs_pw[0].value === data.pw) && (inputs_pw[1].value === inputs_pw[2].value)){
+        if((inputsPw[0].value === data.pw) && (inputsPw[1].value === inputsPw[2].value)){
 
-            data.pw = inputs_pw[1].value;
+            data.pw = inputsPw[1].value;
 
             let result =  await idbPut('userData','info', {
                 data, key : 1
@@ -346,13 +361,20 @@ async function memberInfoModify(type, inputs_pw, input_text){
             return true;
         }
 
-        for(let input of inputs_pw) input.value = '';
+        for(let input of inputsPw) input.value = '';
         return false;
     }
 
     if(type === 'phone'){
 
-        data.phone = input_text[0].value;
+        data.phone = inputText[0].value;
+
+        if(inputText[0].value === ''){
+            messageReminderContentSet('電話號碼不能為空', 'cancel', 'confirm');
+            return true;
+        }
+
+
 
         let result =  await idbPut('userData','info', {
             data, key : 1
@@ -367,7 +389,12 @@ async function memberInfoModify(type, inputs_pw, input_text){
 
     if(type === 'address'){
 
-        data.address = input_text[0].value;
+        data.address = inputText[0].value;
+
+        if(inputText[0].value === ''){
+            messageReminderContentSet('收件地址不能為空', 'cancel', 'confirm');
+            return true;
+        }
 
         let result =  await idbPut('userData','info', {
             data, key : 1
@@ -383,19 +410,24 @@ async function memberInfoModify(type, inputs_pw, input_text){
 
 function cartCheckBoxHandler(){
 
-    const cart_titleCheck = document.getElementById('cart-lists_title-select-all');
-    const cart_footerCheck = document.getElementById('cart-lists_footer-select-all');
-    const cart_itemsCheck = member.querySelectorAll('.cart-lists_item-select input');
+    const cartTitleCheck = document.getElementById('cart-lists_title-select-all');
+    const cartFooterCheck = document.getElementById('cart-lists_footer-select-all');
+    const cartItemsCheck = member.querySelectorAll('.cart-lists_item-select input');
 
     // Title & Footer CheckBox
     if(!this.classList.contains('cart-lists_item-select')){
 
         let srcChecked = this.checked;
 
-        cart_titleCheck.checked = srcChecked;
-        cart_footerCheck.checked = srcChecked;
+        cartTitleCheck.checked = srcChecked;
+        cartFooterCheck.checked = srcChecked;
 
-        for(let item of cart_itemsCheck) item.checked = srcChecked;
+        for(let item of cartItemsCheck) {
+
+            let wrap = item.parentNode.parentNode;
+            item.checked = srcChecked;
+            cartItemUpdateIDB(wrap.dataset.tempId, 'checked', item.checked);
+        }
 
         cartFooterSumRender();
         
@@ -405,15 +437,16 @@ function cartCheckBoxHandler(){
     // Items CheckBox
     let allchecked = true;
 
-    for(let item of cart_itemsCheck){
+    for(let item of cartItemsCheck){
         allchecked &= item.checked ;
     }
 
-    cart_titleCheck.checked = allchecked;
-    cart_footerCheck.checked = allchecked;
+    cartTitleCheck.checked = allchecked;
+    cartFooterCheck.checked = allchecked;
 
     cartFooterSumRender();
 }
+
 function cartItemsControl(target){
 
     // Input CheckBox
@@ -479,6 +512,7 @@ function cartItemsControl(target){
         }
     }
 }
+
 function cartFooterSumRender(){
     
     let ItemsList = member.querySelectorAll('.cart-lists_item-wrap');
@@ -515,6 +549,7 @@ async function orderContentToggle(){
     lists.classList.toggle('show');
     detail.classList.toggle('show');
 }
+
 async function orderDetailDataMatch(serialNumber){
 
     let data = await idbCursor('userData', 'orders');
@@ -527,7 +562,6 @@ async function orderDetailDataMatch(serialNumber){
     }
 }
 
-
 async function cartPayTheBill(){
 
     /*
@@ -536,16 +570,27 @@ async function cartPayTheBill(){
         紀錄商品購買的總金額
         生成LIST紀錄每一筆商品的商品名稱、圖片URL、數量、金額
     */
+    let dataList = await idbCursor('userData', 'cart');
+    let userInfo = await idbCursor('userData', 'info');
+
+    if(userInfo[0].address === '未設置'){
+        messageReminderContentSet('收件地址未設置，包裹將無法送達', 'cancel', 'openInfo');
+        return;
+    }
+
+
+    if(dataList.length < 1){
+        messageReminderContentSet('購物車為空，無法進行購買', 'cancel', 'confirm');
+        return;
+    }
+
+
     let date = new Date();
 
     let serialNumber = parseFloat((date/100)*2).toFixed(0);
     let totalQuantity = 0, totalAmount = 0, payList = [];
 
-    let dataList = await idbCursor('userData', 'cart');
-
     for(let index in dataList){
-
-        // dataList[index]
 
         if(dataList[index].checked){
 
@@ -578,5 +623,52 @@ async function cartPayTheBill(){
         messageReminderContentSet('訂單完成，請查看', 'cancel', 'confirm');
 
         memberContentInit();
+    }
+}
+
+
+function linkToOpenContent(target){
+
+    const navItems = member.querySelectorAll('.member-nav li');
+
+    if(target === 'cartLists'){
+
+        let clicked = sessionStorage.getItem('cartBuyBtn');
+
+        if(clicked === 'clicked'){
+
+            
+
+            for(let item of navItems){
+                item.classList = 'member-nav_item';
+
+                if(item.dataset.classification === target){
+                    
+                    item.classList.add('current-select');
+
+                    memberContentDisplayControl.call(item);
+                }
+            }
+
+            sessionStorage.clear();
+        }
+
+        return ;
+    }
+
+    if(target === 'basicInfo'){
+
+        for(let item of navItems){
+            item.classList = 'member-nav_item';
+
+            if(item.dataset.classification === target){
+                
+                item.classList.add('current-select');
+
+                memberContentDisplayControl.call(item);
+            }
+        }
+
+        return ;
     }
 }

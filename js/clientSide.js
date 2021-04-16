@@ -107,16 +107,16 @@ function formInit(){
 // 偵聽使用者輸入
 function loginInputErrorDetecting(input){
     // input box error msg
-    let error_msg = input.parentNode.querySelector('span');
+    let errorMsg = input.parentNode.querySelector('span');
 
     // to detect account input box
     if(input.dataset.inputType === 'account'){
-        client.login.form.no_err[0] = inputEmptyError(input.value, error_msg);
+        client.login.form.no_err[0] = inputEmptyError(input.value, errorMsg);
     }
 
     // to detect password input box
     if(input.dataset.inputType === 'password'){
-        client.login.form.no_err[1] = inputEmptyError(input.value, error_msg);
+        client.login.form.no_err[1] = inputEmptyError(input.value, errorMsg);
     }
 
     // update form submit btn sylte
@@ -130,19 +130,19 @@ function loginInputErrorDetecting(input){
 
 async function signInputErrorDetecting(input){
     // input box error msg
-    let error_msg = input.parentNode.querySelector('span');
+    let errorMsg = input.parentNode.querySelector('span');
 
     if(input.dataset.inputType === 'name'){
-        client.sign.form.no_err[0] = inputEmptyError(input.value, error_msg);
+        client.sign.form.no_err[0] = inputEmptyError(input.value, errorMsg);
     }
 
     if(input.dataset.inputType === 'account'){
-        client.sign.form.no_err[1] = inputEmptyError(input.value, error_msg);
-        client.sign.form.no_err[1] = await inputExistError(input.value, error_msg);
+        client.sign.form.no_err[1] = inputEmptyError(input.value, errorMsg);
+        client.sign.form.no_err[1] = await inputExistError(input.value, errorMsg);
     }
 
     if(input.dataset.inputType === 'password'){
-        client.sign.form.no_err[2] = inputEmptyError(input.value, error_msg);
+        client.sign.form.no_err[2] = inputEmptyError(input.value, errorMsg);
         client.sign.form.no_err[2] = inputIsRepeatError();
     }
 
@@ -196,11 +196,11 @@ async function inputExistError(text, msg){
     return true;
 }
 function inputIsRepeatError(){
-    let input_arr = [...client.sign.form.dom.querySelectorAll('input[type="password"]')];
-    let msg = input_arr[1].parentNode.querySelector('.error-msg');
+    let inputArr = [...client.sign.form.dom.querySelectorAll('input[type="password"]')];
+    let msg = inputArr[1].parentNode.querySelector('.error-msg');
     // console.log(msg);
-    let text = input_arr[0].value;
-    for(let input of input_arr){
+    let text = inputArr[0].value;
+    for(let input of inputArr){
         if(input.value !== text && input.value !== ''){
             errorMsgRender(msg,  '兩組密碼不相同，請重新輸入');
             return false;
@@ -288,6 +288,8 @@ async function signFormVerify(dom){
 
     // 清空輸入
     formReset('sign');
+
+    messageReminderContentSet('註冊成功', 'turnToHome', 'turnToHome');
 }
 
 function getLoginData() {

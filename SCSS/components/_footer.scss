@@ -1,3 +1,5 @@
+@use "../abstracts";
+
 .footer {
     width: 100%;
     background-color: #f8ce90;
@@ -7,7 +9,7 @@
         flex-wrap: wrap;
         padding: 1.5rem 5rem;
 
-        &>*:not(.logo) {
+        & > *:not(.logo) {
             display: flex;
             flex-direction: column;
             flex: 0 0 50%;
@@ -48,7 +50,7 @@
         justify-content: center;
 
         img {
-            @include img-set(0px, 150px, auto);
+            @include abstracts.img-set(0px, 150px, auto);
         }
 
         p {
@@ -68,14 +70,11 @@
         width: inherit;
         justify-content: center;
         align-items: center;
-        background-color: map-get($color, dark-orange);
+        background-color: map-get(abstracts.$color, dark-orange);
         padding: 0.5rem 0;
     }
 
-
-
-
-    @include breakpoint-down(tablets) {
+    @include abstracts.breakpoint-down(tablets) {
         .logo {
             display: none;
         }
@@ -85,7 +84,7 @@
             align-items: flex-start;
             padding: 1.5rem 1rem;
 
-            &>*:not(.logo) {
+            & > *:not(.logo) {
                 flex: 0 0 100%;
                 max-width: 100%;
                 padding-bottom: 1.5rem;

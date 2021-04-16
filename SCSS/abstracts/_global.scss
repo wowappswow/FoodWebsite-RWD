@@ -1,0 +1,93 @@
+$color: (
+    primary: #fa8c16,
+    second: #fcb348,
+    light-orange: #f8ce90,
+    white: #ffffff,
+    dark-orange: #ad4e00,
+    little-gray:#606060
+);
+
+$buying-card: (
+    def: (
+        width: 1200px,
+        height: 600px,
+    ),
+    desktop-xl: (
+        width: calc(500px + 35vw),
+        height: 600px,
+    ),
+    laptops: (
+        width: 600px,
+        height: 600px,
+    ),
+    tablets: (
+        width: calc(180px + 50vw),
+        height: calc(280px + 30vw),
+    ),
+    mobile: (
+        width: 100%,
+        height: 100vh,
+    ),
+);
+
+$buying-card-font-size: (
+    def: (
+        3.2rem,
+        1.75rem,
+        1rem,
+    ),
+    desktop-xl: (
+        2.4rem,
+        1.5rem,
+        1rem,
+    ),
+    tablets: (
+        calc(20px + 2vw),
+        calc(12px + 2vw),
+        14px,
+    ),
+    mobile: (
+        1.8rem,
+        1rem,
+        0.75rem,
+    ),
+);
+
+$breakpoint-up: (
+    mobile: 481px,
+    tablets: 769px,
+    laptops: 1025px,
+    desktop-lg: 1200px,
+    desktop-xl: 1440px,
+);
+$breakpoint-down: (
+    mobile: 480px,
+    tablets: 768px,
+    laptops: 1024px,
+    desktop-lg: 1199px,
+    desktop-xl: 1439px,
+);
+
+button {
+    border: transparent;
+    background-color: transparent;
+    outline: none;
+    cursor: pointer;
+
+    i {
+        pointer-events: none;
+    }
+}
+
+.hide {
+    position: absolute !important;
+    display: none !important;
+    visibility: hidden !important;
+    top: -999999px !important;
+    left: -999999px !important;
+    z-index: -999999;
+}
+
+.lock-scroll {
+    overflow: hidden;
+}

@@ -1,14 +1,4 @@
-function productIDBUpdate(db, data){
-
-    let store = db.createObjectStore('product', {autoIncrement : true});
-
-    for(let index in data){
-
-        store.add(data[index]);
-    }
-
-}
-
+// 商品卡
 async function productItemsRender(){
     
     const container = document.getElementById('product-content');
@@ -81,80 +71,25 @@ async function productCartBtnHandler(){
     }
 }
 
+function productIDBUpdate(db, data){
 
-function buyingCardEventMount(){
+    let store = db.createObjectStore('product', {autoIncrement : true});
 
-    // Close Btn
-    const close = document.querySelector('.product-buying .close-btn');
+    for(let index in data){
 
-    close.addEventListener('click', (e)=>{
-        document.querySelector('.product-buying').classList.add('hide');
+        store.add(data[index]);
+    }
 
-        // 清除 DATA 位址
-        currentCartItem = {};
-    });
-
-
-    // 購買按鈕
-    const buyingBtn = document.getElementById('buying-btn');
-    buyingBtn.addEventListener('click', ()=>{
-        
-        if(localStorage.getItem('userValidity') === undefined || 
-        localStorage.getItem('userValidity') === null){
-
-            alert('親愛的使用者您還沒有進行登入，請先進行登入後再執行購買!');
-
-            messageReminderContentSet('親愛的使用者您還沒有進行登入，請先進行登入後再執行購買!', 'turnToLogin', 'turnToLogin');
-            return;
-        }
-
-        let counter = document.getElementById('buying-number');
-
-        cartItemGenerator(counter);
-
-        document.querySelector('.product-buying').classList.add('hide');
-
-        sideCartListItemRender();
-
-        messageReminderContentSet('已經加入購物車當中', 'cancel', 'confirm');
-    });
 }
 
 
-function buyingCardUpdate(data){
 
-    // 紀錄 Data 位址
-    currentCartItem = data;
-
-    //Img src path
-    const buyingImg = document.querySelector('.product-buying-card .img-block img');
-    buyingImg.src = `${data.imgUrl}`;
-
-    //Card details
-    const detail = document.querySelector('.product-buying-card-content .content-detail');
-    detail.innerHTML = `
-        <h4>${data.productName}</h4>
-        <h5>${data.productPrice} 元/份</h5>
-        <span>${data.intro}</span>
-    `;
-
-    //Buying total sum Init
-    const buyingSelect = document.getElementById('buying-number');
-    const sum = document.getElementById('buying-sum');
-    sum.dataset.buyingTotal = `${data.productPrice}`;
-    sum.innerHTML = `總計: ${data.productPrice} 元`;
-    buyingSelect.value = 1;
-
-    //Buying total sum Update
-    buyingSelect.addEventListener('change', ()=>{
-        sum.innerHTML = `總計: ${sum.dataset.buyingTotal*buyingSelect.value}.00 元`;
-    });
-}
-
-
+// 商品導覽列
 function productNavEventMount(){
-    
-    let productNavLists = navListIsExist('.side-nav.product-nav', 'ul li');
+
+    let productNavLists = document.querySelectorAll('.side-nav.product-nav ul li');
+
+    if(productNavLists.length < 1) return console.log('導覽列缺失.');
 
     for(let navItem of productNavLists){
 
@@ -195,6 +130,108 @@ function productNavEventHandler(){
     return ;
 }
 
+function typeSelectEventMountForMobile(){
+
+    let device = deviceType();
+
+    if(device !== 'desktops'){
+
+        let selector = document.querySelector('.menu .product-type');
+
+        selector.addEventListener('change', (e)=>{
+            
+            let productLists = document.querySelectorAll('.product-content .product-box[data-type]');
+
+            if(selector.value === 'allProduct'){
+
+                for( let item of productLists){
+        
+                    item.classList.remove('hide');
+                }
+                return ;
+            }
+        
+            for( let item of productLists){
+        
+                if(item.dataset.type !== selector.value) item.classList.add('hide');
+        
+                else item.classList.remove('hide');
+            }
+        
+            return ;
+        });
+    }
+}
+
+
+
+// 購物卡
+function buyingCardEventMount(){
+
+    // Close Btn
+    const close = document.querySelector('.product-buying .close-btn');
+
+    close.addEventListener('click', (e)=>{
+        document.querySelector('.product-buying').classList.add('hide');
+
+        // 清除 DATA 位址
+        currentCartItem = {};
+    });
+
+
+    // 購買按鈕
+    const buyingBtn = document.getElementById('buying-btn');
+    buyingBtn.addEventListener('click', ()=>{
+        
+        if(localStorage.getItem('userValidity') === undefined || 
+        localStorage.getItem('userValidity') === null){
+
+            messageReminderContentSet('請先進行登入後再執行購買!', 'cancel', 'turnToLogin');
+            return;
+        }
+
+        let counter = document.getElementById('buying-number');
+
+        cartItemGenerator(counter);
+
+        document.querySelector('.product-buying').classList.add('hide');
+
+        sideCartListItemRender();
+
+        messageReminderContentSet('已經加入購物車當中', 'cancel', 'confirm');
+    });
+}
+
+function buyingCardUpdate(data){
+
+    // 紀錄 Data 位址
+    currentCartItem = data;
+
+    //Img src path
+    const buyingImg = document.querySelector('.product-buying-card .img-block img');
+    buyingImg.src = `${data.imgUrl}`;
+
+    //Card details
+    const detail = document.querySelector('.product-buying-card-content .content-detail');
+    detail.innerHTML = `
+        <h4>${data.productName}</h4>
+        <h5>${data.productPrice} 元/份</h5>
+        <span>${data.intro}</span>
+    `;
+
+    //Buying total sum Init
+    const buyingSelect = document.getElementById('buying-number');
+    const sum = document.getElementById('buying-sum');
+    sum.dataset.buyingTotal = `${data.productPrice}`;
+    sum.innerHTML = `總計: ${data.productPrice} 元`;
+    buyingSelect.value = 1;
+
+    //Buying total sum Update
+    buyingSelect.addEventListener('change', ()=>{
+        sum.innerHTML = `總計: ${sum.dataset.buyingTotal*buyingSelect.value}.00 元`;
+    });
+}
+
 async function buyingCardBeOpen(){
     
     let productId = sessionStorage.getItem('productOpen');
@@ -221,19 +258,7 @@ async function buyingCardBeOpen(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-//  Side Cart
+// 側邊攔購物車
 async function sideCartListItemRender(){
     
     let dataExist = await idbExist('userData');
@@ -324,22 +349,20 @@ function sideCartFooterRender(){
 function sideCartEventMount(){
 
     let sideCart = document.querySelector('.sidebar-cart');
-    let sideCart_openBtn = document.getElementById('sidebar-cart-open');
-    let sideCart_closeBtn = sideCart.querySelector('.sidebar-cart_title-close');
-    let sideCart_purchase = sideCart.querySelector('.sidebar-cart_footer button');
+    let sideCartOpenBtn = document.getElementById('sidebar-cart-open');
+    let sideCartCloseBtn = sideCart.querySelector('.sidebar-cart_title-close');
+    let sideCartPurchase = sideCart.querySelector('.sidebar-cart_footer button');
 
     // side cart open
-    sideCart_openBtn.addEventListener('click', ()=>{
+    sideCartOpenBtn.addEventListener('click', ()=>{
 
         sideCart.classList.add('unfold');
-        document.body.classList.add('lock-scroll');
     });
 
     // side cart close
-    sideCart_closeBtn.addEventListener('click', ()=>{
+    sideCartCloseBtn.addEventListener('click', ()=>{
 
         sideCart.classList.remove('unfold');
-        document.body.classList.remove('lock-scroll');
     });
     
     // side cart item control
@@ -347,12 +370,12 @@ function sideCartEventMount(){
     
 
     // side cart purchase
-    sideCart_purchase.addEventListener('click', (e)=>{
+    sideCartPurchase.addEventListener('click', (e)=>{
 
+        sessionStorage.setItem('cartBuyBtn', 'clicked');
         window.location.href = '../pages/member.html';
     });
 }
-
 
 async function sideCartItemControl(target){
     
@@ -432,43 +455,6 @@ async function sideCartItemControl(target){
         return;
     }
 }
-
-
-
-function typeSelectEventMountForMobile(){
-
-    let device = deviceType();
-
-    if(device !== 'desktops'){
-
-        let selector = document.querySelector('.menu .product-type');
-
-        selector.addEventListener('change', (e)=>{
-            
-            let productLists = document.querySelectorAll('.product-content .product-box[data-type]');
-
-            if(selector.value === 'allProduct'){
-
-                for( let item of productLists){
-        
-                    item.classList.remove('hide');
-                }
-                return ;
-            }
-        
-            for( let item of productLists){
-        
-                if(item.dataset.type !== selector.value) item.classList.add('hide');
-        
-                else item.classList.remove('hide');
-            }
-        
-            return ;
-        });
-    }
-}
-
-
 
 
 

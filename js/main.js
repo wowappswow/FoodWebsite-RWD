@@ -1,157 +1,80 @@
 // cartStack 用於紀錄刪除商品物件時的dom，以便後續對其進行操作
 // currentView 用於行動裝置上紀錄當前已開啟的資料
 let cartStack =  [];
-let currentPage = 'index'; // 默認值
+let currentPage = 'index';
 let currentView;
-let currentCartItem;
+let currentCartItem; // 用於暫存由 cartControl 操作影響當下的當前 item
+let userLoginStatus; // 刷新頁面的同時檢測當前使用者登入有無以及有效期限
 
+// 各分頁皆掛載
+(async function (){
+    await userStatusUpdating();
 
-//  DIERCTORY
-/*
-    Navbar (Header)
-    ----Variable Declare
-    ----Event Declare
-    ----Functions
-*/ 
+    navBarInit();
 
+    navBarEventMount();
 
-//* Navbar (Header) *//
-//Variable Declare
-const nav = document.querySelector('.nav');
-const navLists = document.querySelector('.nav-lists');
-const navHanbergur = document.querySelector('.nav-menu');
-const banner = document.querySelector('.banner');
-let navHeight = nav.offsetHeight;
+    messageModifyEventMount();
 
-//Process
-window.addEventListener('scroll', debounce(navPositionDetec, 25));
-navHanbergur.addEventListener('click', navHanbergurHandler);
-returnTopSetting();
-
-//Functions
-function navPositionDetec() {
-    let heightY = window.scrollY;
-    
-    if (heightY >=  200 ) {
-        nav.classList.add('fixed');
-        document.body.style.paddingTop = '60px';
-    }
-    else {
-        nav.classList.remove('fixed');
-        document.body.style.paddingTop = '0px';
-    }
-}
-
-function navHanbergurHandler(){
-    navLists.classList.toggle('show');
-}
-function debounce(func, delay = 200){
-    let timer = null;
-
-    return () => {
-        let context = this;
-        let args = arguments;
-
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            func.apply(context, args);
-        }, delay);
-    };
-}
-
-function returnTopSetting() {
-    let topBtn = document.getElementById('top-btn');
-    if(topBtn !== null && topBtn !== undefined){
-        console.log('Top Btn exist');
-        topBtn.addEventListener('click', ()=>{window.scrollTo(0, 0);});
-    }
-    else {
-        console.log('Top Btn not exist');
-    }
-}
+    messageReminderEventMount();
+})();
 
 
 
-//* For side Navbar lists Functions *//
-function navListIsExist(selectorName, path) {
-    let nav = document.querySelector(selectorName),
-        result;
 
-    if(nav !== null && nav !== undefined){
-        result = navListsGetting(true,`${selectorName} ${path}`);
+
+
+// 導覽列事件掛載
+function navBarInit(){
+
+    let userLoginSignBtn = document.getElementById('user-login-sign-btn');
+
+    if(userLoginStatus){
+        userLoginSignBtn.innerHTML = '登出';
     }
     else{
-        result = navListsGetting(false);
+        userLoginSignBtn.innerHTML = '登入';
     }
-    return result;
+
 }
+function navBarEventMount(){
+    const nav = document.querySelector('.nav');
+    const navLists = document.querySelector('.nav-lists');
+    const navHanbergur = document.querySelector('.nav-menu');
+    let userLoginSignBtn = document.getElementById('user-login-sign-btn');
 
-function navListsGetting(flag,path){
-    if(flag){
-        let lists = document.querySelectorAll(`${path}`);
-        return lists;
-    }
-    else {
-        return undefined;
-    }
-}
-
-function eventListenerSetting(target, action,handlerFn){
-    if(target!==undefined && target.length > 1){
-        target.forEach(el => {
-            el.addEventListener(action, handlerFn);
-        });
-    }
-    else{
-        target.addEventListener(action, handlerFn);
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-async function getUserStatus(){
-
-    let userValidity = localStorage.getItem('userValidity');
+    window.addEventListener('scroll', debounce(()=>{
+        let heightY = window.scrollY;
     
-    // 使用者沒有登入
-    if(userValidity === null){
-        console.log('使用者沒有登入');
-        return false;
-    }
+        if (heightY >=  200 ) {
+            nav.classList.add('fixed');
+            document.body.style.paddingTop = '60px';
+        }
+        else {
+            nav.classList.remove('fixed');
+            document.body.style.paddingTop = '0px';
+        }
+    }, 25));
 
-    let [account, timeStamp] = JSON.stringify(userValidity).split(',');
+    navHanbergur.addEventListener('click', ()=>{
+        navLists.classList.toggle('show');
+    });
 
-    let periodStatus =  userValidityPeriodCheck(timeStamp, 120);
+    userLoginSignBtn.addEventListener('click', (e)=>{
 
-    if(!periodStatus){
+        if(e.target.innerHTML === '登入'){
+            window.location.href = '../pages/member.html';
+        }
+        if(e.target.innerHTML === '登出'){
 
-        localStorage.clear();
-
-        if( idbExist('userData') ) idbDeleteDB('userData');
-        if( idbExist('productData') ) idbDeleteDB('productData');
-
-        return false;
-    }
-
-    return true;
+            messageReminderContentSet('請確認是否要登出', 'cancel', 'loginOut');
+        }
+    });
 }
 
 
 
-// TEST START
+// Component Or Tool
 function deviceType(){
 
     if(window.innerWidth <= 480) return 'mobile';
@@ -159,6 +82,7 @@ function deviceType(){
     if(window.innerWidth > 768 && window.innerWidth <= 1440) return 'laptops';
     if(window.innerWidth > 1440) return 'desktops';
 }
+
 function debounce(func, delay = 200){
     let timer = null;
 
@@ -195,10 +119,6 @@ async function cartItemUpdateIDB(targetID, targetItem, updateData){
     let data = await idbCursor('userData', 'cart');
     let matchData;
 
-    // Debug
-    // console.log(targetID, targetItem, updateData);
-
-
     // 讀取匹配的資料項目
     for(let index in data){
 
@@ -219,9 +139,31 @@ async function cartItemUpdateIDB(targetID, targetItem, updateData){
     return result;
 }
 
+function debounce(func, delay = 200){
+    let timer = null;
 
-// TEST END
+    return () => {
+        let context = this;
+        let args = arguments;
 
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            func.apply(context, args);
+        }, delay);
+    };
+}
+
+function returnTopEventMount() {
+    let topBtn = document.getElementById('top-btn');
+    if(topBtn !== null && topBtn !== undefined){
+        // console.log('Top Btn exist');
+        topBtn.addEventListener('click', ()=>{window.scrollTo(0, 0);});
+    }
+    else {
+        // console.log('Top Btn not exist');
+        return ;
+    }
+}
 
 
 
@@ -229,24 +171,24 @@ async function cartItemUpdateIDB(targetID, targetItem, updateData){
 function messageModifyEventMount(){
 
     const modify = document.querySelector('.message-box_modify');
-    const [modify_close, modify_confirm] = 
+    const [modifyClose, modifyConfirm] = 
         modify.querySelectorAll('.message-box_modify .message-box_modify-btn');
-    const modify_inputs = [...modify.querySelectorAll('input')];
+    const modifyInputs = [...modify.querySelectorAll('input')];
 
     // 清空使用者輸入內容
-    modify_close.addEventListener('click', (e)=>{
+    modifyClose.addEventListener('click', (e)=>{
 
-        for(let input of modify_inputs){
+        for(let input of modifyInputs){
             input.value = '';
         }
         modify.classList.remove('show');
     });
 
-    modify_confirm.addEventListener('click', async (e) =>{
+    modifyConfirm.addEventListener('click', async (e) =>{
         
         let msgType = modify.dataset.msgType;
 
-        let result =  await memberInfoModify(msgType, modify_inputs.slice(0,3),  modify_inputs.slice(3));
+        let result =  await memberInfoModify(msgType, modifyInputs.slice(0,3),  modifyInputs.slice(3));
 
         if(!result){
 
@@ -254,7 +196,7 @@ function messageModifyEventMount(){
             return ;
         }
         
-        for(let input of modify_inputs){
+        for(let input of modifyInputs){
             input.value = '';
         }
         modify.classList.remove('show');
@@ -263,23 +205,23 @@ function messageModifyEventMount(){
 function messageModifyOpen(msgType){
     
     const modify = document.querySelector('.message-box_modify');
-    const [modify_pw, modify_text] = modify.querySelectorAll('.message-box_modify-content > *');
+    const [modifyPw, modifyText] = modify.querySelectorAll('.message-box_modify-content > *');
 
     modify.dataset.msgType = msgType;
     
     if(msgType === 'password'){
 
-        modify_pw.classList.remove('hide');
-        modify_text.classList.add('hide');
+        modifyPw.classList.remove('hide');
+        modifyText.classList.add('hide');
         modify.classList.add('show');
         return ;
     }
 
-    let modify_textTitle = modify_text.querySelector('p');
+    let modifyTextTitle = modifyText.querySelector('p');
 
-    modify_textTitle.innerHTML = (msgType === 'phone') ? '新的電話號碼' : '新的收件地址';
-    modify_pw.classList.add('hide');
-    modify_text.classList.remove('hide');
+    modifyTextTitle.innerHTML = (msgType === 'phone') ? '新的電話號碼' : '新的收件地址';
+    modifyPw.classList.add('hide');
+    modifyText.classList.remove('hide');
     modify.classList.add('show');
     return ;
 }
@@ -287,13 +229,13 @@ function messageModifyOpen(msgType){
 function messageReminderContentSet(text, closeAttr, confirmAttr){
 
     const reminder = document.querySelector('.message-box_reminder');
-    const [reminder_close, reminder_confirm] = reminder.querySelectorAll('.message-box_reminder-btn') ;
+    const [reminderClose, reminderConfirm] = reminder.querySelectorAll('.message-box_reminder-btn') ;
     const reminder_textArea = reminder.querySelector('.message-box_reminder-content p');
 
     reminder.classList.add('show');
 
-    reminder_close.dataset.act = closeAttr;
-    reminder_confirm.dataset.act = confirmAttr;
+    reminderClose.dataset.act = closeAttr;
+    reminderConfirm.dataset.act = confirmAttr;
 
     reminder_textArea.innerHTML = text;
 }
@@ -314,6 +256,10 @@ function messageReminderEventMount(){
 
             if(act === 'turnToLogin'){
                 window.location.href = '../pages/member.html';
+            }
+
+            if(act === 'turnToHome'){
+                window.location.href = '../pages/home.html';
             }
         }
 
@@ -342,11 +288,25 @@ function messageReminderEventMount(){
             if(act === 'turnToLogin'){
                 window.location.href = '../pages/member.html';
             }
+
+            if(act === 'turnToHome'){
+                window.location.href = '../pages/home.html';
+            }
+
+            if(act === 'loginOut'){
+                localStorage.clear();
+                idbDeleteDB('userData');
+                window.location.href = '../pages/member.html';
+            }
+
+            if(act === 'openInfo'){
+
+                linkToOpenContent('basicInfo');
+                reminder.classList.remove('show');
+            }
         }
     });
 }
-
-
 
 
 
@@ -363,12 +323,12 @@ function indexPageLoad(){
 
     for(let index in animationList){
 
-    setTimeout(() => {
-        animationList[index].classList.add('animated');
-    }, 300*index);
+        let item = animationList[index];
+
+        setTimeout(()=>{
+            item.classList.add('animated');
+        }, 300*index);
     }
-
-
 }
 
 function homePageLoad(){
@@ -383,21 +343,18 @@ function homePageLoad(){
         carouselEventAdd();
     }
 
-    productDetailLookEventMount();
+    productLookEventMount();
 }
 
 async function productPageLoad(){
     
     currentPage = 'product';
 
-    console.log('productPageLoad is call');
     let alreadyInit = await idbExist('productData');
 
     if(!alreadyInit){
 
         let data = await getData('../src/data/productData.json');
-
-        // console.log(data.products);
 
         await idbOpen('productData', 2, productIDBUpdate, data.products);
     }
@@ -418,9 +375,7 @@ async function productPageLoad(){
 
     typeSelectEventMountForMobile();
 
-    messageModifyEventMount();
-
-    messageReminderEventMount();
+    returnTopEventMount();
 }
 
 function servicePageLoad(){
@@ -430,11 +385,6 @@ function servicePageLoad(){
 async function memberPageLoad(){
     
     currentPage = 'member';
-
-    // 抓取瀏覽器中的使用者 Key 是否為 NULL
-    let userLoginStatus = await getUserStatus();
-
-    console.log(userLoginStatus);
 
     if(userLoginStatus){
         document.querySelector('.client').classList.add('hide');
@@ -453,9 +403,8 @@ async function memberPageLoad(){
         pageAnimationEventMount();
         formInit();
     }
-
-    messageReminderEventMount();
 }
+
 
 
 // IndexedDB Implement
@@ -584,6 +533,7 @@ async function idbDeleteDB(dbName){
 }
 
 
+
 // 使用者登入狀態
 function userValidityPeriodSet(userID){
     
@@ -609,4 +559,36 @@ function userValidityPeriodCheck(userTimeStamp, validityPeriod){
     }
     
     return true;
+}
+
+async function getUserStatus(){
+
+    let userValidity = localStorage.getItem('userValidity');
+    
+    // 使用者沒有登入
+    if(userValidity === null){
+        // console.log('使用者沒有登入');
+        return false;
+    }
+
+    let [account, timeStamp] = JSON.stringify(userValidity).split(',');
+
+    let periodStatus =  userValidityPeriodCheck(timeStamp, 1800); // 使用者登入有效期限為30分鐘
+
+    if(!periodStatus){
+
+        localStorage.clear();
+
+        if( idbExist('userData') ) idbDeleteDB('userData');
+        if( idbExist('productData') ) idbDeleteDB('productData');
+
+        return false;
+    }
+
+    return true;
+}
+
+async function userStatusUpdating(){
+    
+    userLoginStatus = await getUserStatus();
 }

@@ -1,87 +1,35 @@
-//Media Query
-/*
-Bootstrap的Media Query各種裝置定義
-Mobile – xs ( < 768px )
-Tablet – sm ( 768~991px )
-Desktop – md ( 992~1200px )
-Large Desktop – lg ( >= 1200px )
-*/
-$breakpoint-up : (mobile:481px, tablets:769px, laptops:1025px, desktop-lg:1200px, desktop-xl:1440px);
-$breakpoint-down : (mobile:480px, tablets:768px, laptops:1024px, desktop-lg:1199px, desktop-xl:1439px);
+@use "global" as *;
 
-@mixin breakpoint-up ($size) {
-    @media (min-width : map-get($breakpoint-up, $size)) {
+@mixin breakpoint-up($size) {
+    @media (min-width: map-get($breakpoint-up, $size)) {
         @content;
     }
 }
 
 @mixin breakpoint-down($size) {
-    @media (max-width : map-get($breakpoint-down, $size)) {
+    @media (max-width: map-get($breakpoint-down, $size)) {
         @content;
     }
 }
 
-
-
-
-
-
-
-
-
-@mixin img-set ($radius, $width, $height) {
-    vertical-align: middle;
-    border-radius: $radius;
+@mixin img-set($radius, $width, $height) {
     width: $width;
     height: $height;
-    object-fit: cover;
-}
-
-
-
-@mixin border-round-set($radius, $width, $color, $style) {
     border-radius: $radius;
-    border-color: $color;
-    border-style: $style;
-    border-width: $width;
+    vertical-align: middle;
+    object-fit: cover;
+    @content;
 }
-
-
 
 @mixin circle-make($width, $color) {
-    @include border-round-set(50%, 1px, transparent, solid);
+    border: none;
+    border-radius: 50%;
     width: $width;
     height: $width;
     background-color: $color;
 }
 
-
-
-
-@mixin btn-round-setting ($radius) {
-    border-radius: $radius;
-    border-color: transparent;
-    outline: none;
-    cursor: pointer;
-}
-
-
-
-
-
-@mixin container-setting($box-type, $width, $padding) {
-    display: $box-type;
-    width: $width;
-    padding: 0 $padding 0 $padding;
-    height: unset;
-}
-
-
-@mixin product-card-setting($card-width,
-    $card-radius,
-    $text-height,
-    $text-padding,
-    $btn-padding) {
+@mixin product-card-setting($card-width, $card-radius, $text-height, $text-padding, $btn-padding) {
     .product-card {
         width: $card-width;
         border-radius: $card-radius;
@@ -108,8 +56,7 @@ $breakpoint-down : (mobile:480px, tablets:768px, laptops:1024px, desktop-lg:1199
     }
 }
 
-
-@mixin banner-set ($height, $img-pos-x, $img-pos-y) {
+@mixin banner-set($height, $img-pos-x, $img-pos-y) {
     width: 100%;
     height: $height;
 
@@ -139,4 +86,10 @@ $breakpoint-down : (mobile:480px, tablets:768px, laptops:1024px, desktop-lg:1199
     span {
         font-size: nth($font-list, 3);
     }
+}
+
+@mixin btn-set {
+    cursor: pointer;
+    outline: none;
+    @content;
 }

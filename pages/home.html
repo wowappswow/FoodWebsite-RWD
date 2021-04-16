@@ -40,28 +40,21 @@
         </div>
         <ul class="nav-lists hide-for-mobile">
             <li class="list-item">
-                <a
-                    href="../pages/home.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >首頁</a>
+                <a href="./home.html">首頁</a>
             </li>
             <li class="list-item">
-                <a
-                    href="../pages/product.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >商品</a>
+                <a href="./product.html">商品</a>
             </li>
             <li class="list-item">
-                <a
-                    href="../pages/service.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >服務</a>
+                <a href="./service.html">服務</a>
             </li>
             <li class="list-item">
-                <a
-                    href="../pages/member.html"
-                    class="text-unstyle text-primary font-5x font-w6"
-                >會員</a>
+                <a href="./member.html">會員</a>
+            </li>
+            <li class="list-item">
+                <a id="user-login-sign-btn">
+                    登入
+                </a>
             </li>
         </ul>
     </nav>
@@ -77,10 +70,13 @@
         <div class="product-intro-title">商品介紹</div>
         <ul class="product-intro-lists">
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_1.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_1.jpeg"
+                        alt=""
+                    >
+                </div>
+
                 <span>
                     日式咖哩飯 - 日本國民美食
                     <a
@@ -93,10 +89,13 @@
 
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_2.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_2.jpeg"
+                        alt=""
+                    >
+                </div>
+
                 <span>
                     鹹酥炸雞 - 香脆濃郁伴隨著檸檬香
                     <a
@@ -108,10 +107,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_3.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_3.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     黃金炸豬排 - 每一口都讓人流連忘返
                     <a
@@ -123,10 +124,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_4.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_4.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     冬陰湯 - 讓在這個寒天裡溫暖你的心
                     <a
@@ -138,10 +141,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_5.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_5.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     義大利麵 - 充滿異國風情的味道
                     <a
@@ -153,10 +158,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_6.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_6.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     味噌烏龍麵 - 來自大海的饋贈
                     <a
@@ -168,10 +175,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_7.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_7.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     四季時蔬湯 - 營養好吸收
                     <a
@@ -183,10 +192,12 @@
                 </span>
             </li>
             <li>
-                <img
-                    src="../src/pic/product_imgs/product_id_8.jpeg"
-                    alt=""
-                >
+                <div>
+                    <img
+                        src="../src/pic/product_imgs/product_id_8.jpeg"
+                        alt=""
+                    >
+                </div>
                 <span>
                     奶油燉菜濃湯 - 還在煩惱小孩子的挑食嗎
                     <a
@@ -208,8 +219,8 @@
         </p>
     </section>
 
-    <section class="product-carousel">
-        <div class="carousel-view flex">
+    <section class="carousel">
+        <div class="carousel-view">
             <button
                 class="carousel-view-btn prev"
                 id="prev"
@@ -222,8 +233,8 @@
             >
                 <i></i>
             </button>
-            <div class="carousel-container flex flex-unwrap">
-                <div class="display-box">
+            <div class="carousel-view-content">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="1"
@@ -234,7 +245,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="2"
@@ -245,7 +256,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="3"
@@ -256,7 +267,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="4"
@@ -267,7 +278,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="5"
@@ -278,7 +289,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="6"
@@ -289,7 +300,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="7"
@@ -300,7 +311,7 @@
                         >
                     </a>
                 </div>
-                <div class="display-box">
+                <div class="carousel-view-content-item">
                     <a
                         href="javascript:void(0)"
                         data-product-id="8"
@@ -315,7 +326,7 @@
         </div>
     </section>
 
-    <footer class="footer flex-column">
+    <footer class="footer">
         <div class="footer-content">
             <div class="logo">
                 <img
@@ -345,19 +356,19 @@
             <ul class="social">
                 <h4 class="content-title">社群連結</h4>
                 <li>
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i class="fab fa-facebook-square"></i>
                         FaceBook 粉專
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i class="fab fa-line"></i>
                         LINE 官方帳號
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="javascript:void(0)">
                         <i class="fab fa-twitter-square"></i>
                         Twitter 官方帳號
                     </a>
@@ -368,6 +379,68 @@
             Copyright © 2020 閒飯家常All Rights Reserved
         </div>
     </footer>
+
+    <div class="message-box">
+        <div class="message-box_modify">
+            <div class="message-box_modify-content">
+                <div class="message-box_modify-content_pw">
+                    <label for="modify-old-pw">
+                        <p>舊密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-old-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-new-pw">
+                        <p>新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-new-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                    <label for="modify-renew-pw">
+                        <p>重複新密碼</p>
+                        <input
+                            type="password"
+                            name=""
+                            id="modify-renew-pw"
+                            autocomplete="false"
+                        >
+                    </label>
+                </div>
+                <div class="message-box_modify-content_text hide">
+                    <label for="modify-text">
+                        <p>新的</p>
+                        <input
+                            type="text"
+                            id="modify-text"
+                        >
+                    </label>
+                </div>
+            </div>
+            <button class="message-box_modify-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_modify-btn confirm">
+                確認
+            </button>
+        </div>
+        <div class="message-box_reminder">
+            <div class="message-box_reminder-content">
+                <p>測試用內容。</p>
+            </div>
+            <button class="message-box_reminder-btn close">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="message-box_reminder-btn confirm">
+                確認
+            </button>
+        </div>
+    </div>
 
     <script src="../js/main.js"></script>
     <script src="../js/home.js"></script>

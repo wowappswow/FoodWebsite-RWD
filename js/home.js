@@ -1,26 +1,17 @@
 // 目錄
-/*Product Carousel
-    Variable Declare
-    Function
-    ----Carousel Init
-    ----Carousel Clone items
-    ----Carousel Event Add & Remove
-    ----Carousel Control
-    ----Error Detection And Reset
-    ----Carousel Update
-    ----Functional Tool
-    ----Get Width By index
-*/
+// 全域變數宣告
+// 輪播初始化以及事件偵聽掛載移除
+// 輪播錯誤偵測以及輪播重新渲染(隨著View更新做變化)
+// 為輪播的商品卡以及商品介紹做事件偵聽掛載
 
 
 
-//* Product Carousel *//
-// Variable Declare
+// 全域變數宣告
 let prevBtn = document.querySelector('.carousel-view-btn.prev');
 let nextBtn = document.querySelector('.carousel-view-btn.next');
 const carouselView = document.querySelector('.carousel-view');
-const carousel = carouselView.querySelector('.carousel-container');
-const carouselImgs = [...carousel.querySelectorAll('.display-box')];
+const carousel = carouselView.querySelector('.carousel-view-content');
+const carouselImgs = [...carousel.querySelectorAll('.carousel-view-content-item')];
 const carouselLen = carouselImgs.length;
 const carouselMiddle = carouselLen/2;
 let index, timer = null, autoDuration = 3500;
@@ -29,8 +20,8 @@ let carouselActived = false;
 window.addEventListener('resize', debounce(windowResize, 50));
 
 
-// Functions
-// ----Carousel Init
+
+// 輪播初始化以及事件偵聽掛載移除
 function carouselInit(){
     // check clone items if already exist
     let cloneExist = (
@@ -53,7 +44,7 @@ function carouselInit(){
     // active
     carouselActived = true;
 }
-// ----Carousel Clone items
+
 function carouselClone(){
     const prevClone = [], nextClone = []; 
     for(let i = carouselLen-1; i >= carouselMiddle; i--){
@@ -71,7 +62,7 @@ function carouselClone(){
         carousel.append(nextClone[i]);
     }
 }
-// ----Carousel Event Add & Remove
+
 function carouselEventAdd(){
     prevBtn.addEventListener('click', debounce(prevHandler));
     nextBtn.addEventListener('click', debounce(nextHandler));
@@ -80,6 +71,7 @@ function carouselEventAdd(){
     carouselView.addEventListener('mouseleave', carouselAutoActive);
     document.addEventListener("visibilitychange", carouselAutoControl);
 }
+
 function carouselEventRemove(){
     prevBtn.removeEventListener('click', debounce(prevHandler));
     nextBtn.removeEventListener('click', debounce(nextHandler));
@@ -88,24 +80,31 @@ function carouselEventRemove(){
     carouselView.removeEventListener('mouseleave', carouselAutoActive);
     document.removeEventListener("visibilitychange", carouselAutoControl);
 }
-// ----Carousel Control
+
+
+
+// 輪播控制
 function prevHandler(){
     index++;
     carouselUpdate();
 }
+
 function nextHandler(){
     index--;
     carouselUpdate();
 }
+
 function carouselAutoStop() {
     clearInterval(timer);
     carouselActived = false;
 }
+
 function carouselAutoActive(){
     timer = setInterval(() => {
         nextHandler();
     }, autoDuration);
 }
+
 function carouselAutoControl() {
     // Use web tag to detect if user still in focus on web
     if (document.visibilityState === 'visible') {
@@ -120,7 +119,31 @@ function carouselAutoControl() {
         visibleFlag = false;
     }
 }
-// ----Error Detection And Reset
+
+function anchorHandler() {
+    let anchor = -index;
+    if( (anchor-12) === 0){
+        anchorReset(-(getWidth(carouselView)), -4);
+    }
+    else if (!anchor) {
+        anchorReset(-(getWidth(carouselView)*2), -8);
+    }
+}
+
+function anchorReset(resetPosition, indexValue){
+    carousel.style.transition = 'none';
+    carousel.style.transform = `translateX(${resetPosition}px)`;
+    index = indexValue;
+
+    setTimeout(() => {
+        carousel.style.transition = 'all 0.25s ease-out';
+    }, 0);
+}
+
+
+
+
+// 輪播錯誤偵測以及輪播重新渲染(隨著View更新做變化)
 function carouselErrorDetec(){
     let matrix  = getComputedStyle(carousel, null).transform;
     let x, y;
@@ -138,29 +161,12 @@ function carouselErrorDetec(){
         anchorReset(-1000, -4);
     } 
 }
-function anchorHandler() {
-    let anchor = -index;
-    if( (anchor-12) === 0){
-        anchorReset(-(getWidth(carouselView)), -4);
-    }
-    else if (!anchor) {
-        anchorReset(-(getWidth(carouselView)*2), -8);
-    }
-}
-function anchorReset(resetPosition, indexValue){
-    carousel.style.transition = 'none';
-    carousel.style.transform = `translateX(${resetPosition}px)`;
-    index = indexValue;
 
-    setTimeout(() => {
-        carousel.style.transition = 'all 0.25s ease-out';
-    }, 0);
-}
-// ----Carousel Update
 function carouselUpdate(){
     let xValue = index*(getWidth(carouselView)/4);
     carousel.style.transform = `translateX(${xValue}px)`;
 }
+
 function windowResize() {  
     
     let type = deviceType();
@@ -181,7 +187,7 @@ function windowResize() {
 
     carouselUpdate();
 }
-// ----Get Width By index
+
 function getWidth(target){
     let result = parseInt
     (window.getComputedStyle(target)
@@ -192,8 +198,8 @@ function getWidth(target){
 
 
 
-// 2021/04/08
-function productDetailLookEventMount(){
+//  為輪播的商品卡以及商品介紹做事件偵聽掛載
+function productLookEventMount(){
     
     // Carousel
     carousel.addEventListener('click', (e)=>{
